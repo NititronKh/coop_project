@@ -1,0 +1,10 @@
+{% extends 'teacher/components/base.html' %}
+{% block content %}
+  <h2>สร้างการเผยแพร่</h2>
+  <form method="post" enctype="multipart/form-data" action="{% url 'publish' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">เผยแพร่</button>
+  </form>
+  <a href="{% url 'teacher_home' %}">กลับหน้าหลัก</a>
+{% endblock %}

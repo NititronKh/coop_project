@@ -1,0 +1,65 @@
+{% extends 'teacher/components/base.html' %}
+{% block content %}
+<body>
+    <h2>Coop List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ชื่อ</th>
+                <th>ลำดับที่</th>
+                <th>หัวข้อ</th>
+                <th>เอกสารรับรอง</th>
+                <th>จำนวนชั่วโมงหน่วยกิต</th>
+                <th>สถานะ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coop in coops %}
+    <tr>
+        <td>{{ coop.user.first_name }}</td>
+        <td>{{ coop.id }}</td>
+        <td>{{ coop.title }}</td>
+        <td>{{ coop.date }}</td>
+        <td><a href="{{ coop.certificate.url }}" target="_blank">ดูเอกสาร</a></td>
+        <td>{{ coop.score }}</td>
+        <td>
+            {{ coop.status }}
+            <form method="post" action="{% url 'delete_record' coop.pk %}">
+                {% csrf_token %}
+                <button type="submit">ลบ</button>
+            </form> 
+        </td>
+            <td>
+                
+                    
+                {% if coop.status == "pending" %}
+                    <form method="post" action="{% url 'change_status' coop.pk %}">
+                    
+                   {% csrf_token %}
+                        {{ form.status_display }}
+                        <input type="submit" value="อนุมัติ">
+                        
+                        
+                    </form>
+                {% endif %}
+            </td>
+            
+       
+    </tr>
+            {% endfor %}
+            
+                </tr>
+        </tbody>
+    </table>
+</body>
+<tfoot>
+    <tr>
+        <td colspan="3">รวม</td>
+        <td>{{ total_credit_hours }}</td>
+    </tr>
+</tfoot>
+
+{% for coop in coops %}
+{{ coop.status }}
+{% endfor %}
+{% endblock %}

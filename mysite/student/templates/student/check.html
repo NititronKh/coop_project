@@ -1,0 +1,36 @@
+{% extends 'student/components/base.html' %}
+
+{% block content %}
+<body>
+    <h1>หน้าตรวจสอบหน่วยกิต</h1>
+    <h2>Coop List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ลำดับที่</th>
+                <th>หัวข้อ</th>
+                <th>เอกสารรับรอง</th>
+                <th>จำนวนชั่วโมงหน่วยกิต</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ record.title }}</td>
+                <td><a href="{{ record.certificate.url }}" target="_blank">ดูเอกสาร</a></td>
+                <td>{{ record.score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<tfoot>
+    <tr>
+        <td colspan="3">รวม</td>
+        <!-- หากไม่มีตัวแปร total_credit_hours สามารถลบได้ -->
+        <td><!-- แสดงจำนวนชั่วโมงหน่วยกิตรวม --></td>
+    </tr>
+</tfoot>
+{% endblock %}

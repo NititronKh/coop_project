@@ -1,0 +1,107 @@
+/* mitr-300 - latin_thai */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Mitr';
+  font-style: normal;
+  font-weight: 300;
+  src: 
+  url('fonts/mitr-v11-latin_thai-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* mitr-regular - latin_thai */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Mitr';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/mitr-v11-latin_thai-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+a{
+text-decoration: none;
+color: #000;
+}
+ul {
+list-style-type: none; 
+}
+
+.fullpage2{
+display: flex;
+flex-direction: column;
+margin: 0;
+height: 100%;
+background-image: url('https://th.bing.com/th/id/OIP.VCNDmPVCaVJHFhKl43Xx6gHaEK?rs=1&pid=ImgDetMain');
+background-repeat: no-repeat;
+background-size: cover; 
+}
+.menu{
+margin-left: 15%;
+margin-right: 70%;
+border: 1px solid #1b1919;
+height: 100%;
+background-image: url('https://files.123freevectors.com/wp-content/original/156607-orange-and-white-background-vector-image.jpg');
+background-repeat: no-repeat;
+background-size: cover; 
+
+}
+.menu1{
+margin: 0;
+padding:0px;
+background:#aba9a9;
+background-image:url(bg.gif);
+background-position:left;
+background-repeat: repeat-x;
+background-attachment : fixed;
+background-size:contain;
+font-size: 15px;
+}
+.menu2{
+margin: 0;
+padding:0px;
+background:#FFFFFF;
+background-image:url(bg.gif);
+background-position:left;
+background-repeat: repeat-x;
+background-attachment : fixed;
+background-size:contain;
+font-size: 15px;
+border: 1px solid #1b1919;
+
+}
+
+
+.content1{
+margin-left: 70%;
+margin-right: 15%;
+border: 1px solid #911212;
+background-color: whitesmoke;
+height: 100%;
+margin-top: 0;
+
+}
+
+.header{
+background-color: aqua;
+margin-left: 15%;
+margin-right: 15%;
+margin-bottom: 0%;
+border: 1px solid #000;
+
+
+}
+
+.titles {
+text-align: center;
+padding: 70px;
+margin: 0;
+background-image: url('https://static.trueplookpanya.com/cmsblog/771/76771/banner_file.jpg');
+background-repeat: no-repeat;
+background-size: cover; 
+border: 1px solid snow;
+}

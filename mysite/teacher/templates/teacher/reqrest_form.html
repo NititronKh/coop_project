@@ -1,0 +1,55 @@
+{% extends 'teacher/components/base.html' %}
+{% block content %}
+<body>
+    <h2>ตรวจสอบเอกสาร</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ลำดับที่</th>
+                <th>วันที่</th>
+                <th>เอกสาร</th>
+                <th>จำนวนชั่วโมงหน่วยกิต</th>
+                <th>สถานะ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in form %}
+    <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.date2 }}</td>
+        <td><a href="{{ i.certificate2.url }}" target="_blank">ดูเอกสาร</a></td>
+        <td>
+            {{ i.status2 }}
+            <form method="post" action="{% url 'delete_record' i.pk %}">
+                {% csrf_token %}
+                <button type="submit">ลบ</button>
+            </form> 
+        </td>
+            <td>
+                
+                    
+                {% if i.status2 == "pending" %}
+                    <form method="post" action="{% url 'change_status2' i.pk %}">
+                    
+                   {% csrf_token %}
+                        {{ i.status_display }}
+                        <input type="submit" value="อนุมัติ">
+                        
+                        
+                    </form>
+                {% endif %}
+            </td>
+            
+       
+    </tr>
+            {% endfor %}
+            
+                </tr>
+        </tbody>
+    </table>
+</body>
+
+{% for i in form %}
+{{ i.status2 }}
+{% endfor %}
+{% endblock %}

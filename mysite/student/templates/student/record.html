@@ -1,0 +1,12 @@
+{% extends 'student/components/base.html' %}
+{% block content %}
+  <h2>หน้าบันทึกหน่วยกิต</h2>
+  <div>
+    <form method="post" enctype="multipart/form-data" action="{% url 'record' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">บันทึก</button>
+    </form>
+  </div>
+  <a href="{% url 'student_home' %}">กลับหน้าหลัก</a>
+{% endblock %}

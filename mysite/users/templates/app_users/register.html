@@ -1,0 +1,23 @@
+{% extends 'student/components/base.html' %}
+{% block content %}
+<body >
+
+    <div>
+        <h1>ลงทะเบียน</h1>
+    
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>
+                <button type="submit">ลงทะเบียน</button>
+            </p>
+        </form>
+    </div>
+</body>
+
+
+
+<a href="{% url 'login' %}">
+    <button type="submit">เข้าสู่ระบบ</button>
+</a>
+{% endblock %}

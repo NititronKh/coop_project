@@ -1,0 +1,62 @@
+<!-- ไฟล์ base.html -->
+{% load static %} <!-- เพิ่มบรรทัดนี้ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'student/main.css' %}">
+    <link rel="stylesheet" href="{% static 'student/normalize.css' %}">
+</head>
+<body>
+  <div class="sidebar">
+    <ul class="menu">
+      <li >
+        <a href="{% url 'teacher_home' %}">
+          <i class="fas fa-star"></i>
+          <span>หน้าหลัก</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'list_name' %}">
+          <i class="fas"></i>
+          <span>ทะเบียนรายชื่อ</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'publish' %}">
+          <i class="fas"></i>
+          <span>ประชาสัมพันธ์</span>
+        </a> 
+      </li>
+      <li>
+        <a href="{% url 'reqrest_form' %}">
+          <i class="fas"></i>
+          <span>คำขอลงสหกิจ</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'reqrest_record' %}">
+          <i class="fas"></i>
+          <span>คำขอบันทึกหน่วยกิต</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'create_user' %}">
+          <i class="fas"></i>
+          <span>สร้างบัญชีผู้ใช้</span>
+        </a>
+      </li>
+      <li class="logout">
+        <a href="{% url 'home' %}">
+          <span>ออกจากระบบ</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <h2 class="top">ระบบติดตามการฝึกสหกิจ</h2>
+    {% block content %}
+    {% endblock%}
+  </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'teacher/components/base.html' %}
+{% load static %}
+
+{% block content %}
+{% for item in publishes %}
+    <div>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.content }}</p>
+      <p>{{ item.image.publish_images }}</p>
+      {{ item }}
+      {% if item in publishes %}
+      <img src="{{ item.image.url }}" alt="Image"style="width: 400px; height: auto;">
+      {% endif %}
+      <form method="post", action="{% url 'delete_publish' item.pk %}">
+        {% csrf_token %}
+        <button type="submit">ลบ</button>
+      </form>
+    </div>
+{% endfor %}
+{% endblock %}
+

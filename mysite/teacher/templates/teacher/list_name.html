@@ -1,0 +1,36 @@
+<!-- ไฟล์ list_name.html -->
+
+{% extends 'teacher/components/base.html' %}
+
+{% block content %}
+  <div class="list_name">
+    <h2>ทะเบียนรายชื่อ</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>รหัสนักศึกษา</th>
+          <th>ชื่อ</th>
+          <th>นามสกุล</th>
+          <th>อีเมล</th>
+          <th>แก้ไขข้อมูล</th>  
+        </tr>
+      </thead>
+      <tbody>
+        {% for signup in list %}
+          <tr>
+            <td>{{ signup.id }}</td>
+            <td>{{ signup.first_name }}</td>
+            <td>{{ signup.last_name }}</td>
+            <td>{{ signup.username }}</td>
+            <td>
+              <form method="post" action="{% url 'delete_name' signup.pk %}">
+                {% csrf_token %}
+                <button type="submit">ลบ</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

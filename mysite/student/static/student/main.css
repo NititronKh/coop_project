@@ -1,0 +1,98 @@
+/* mitr-300 - latin_thai */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Mitr';
+    font-style: normal;
+    font-weight: 300;
+    src: 
+    url('fonts/mitr-v11-latin_thai-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+  
+  /* mitr-regular - latin_thai */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Mitr';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/mitr-v11-latin_thai-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+.top{
+  margin: 0;
+  padding: 0;
+  right: 0;
+  color: rgb(145, 24, 54);
+}
+.sidebar,.main-content{
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  font-family: sans-serif; 
+}
+body {
+  display: flex;
+}
+.sidebar{
+  position: sticky;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 330px;
+  height: 100vh;
+  padding: 0 1.7rem;
+  color: #e9dada;
+  overflow: hidden;
+  transition: all 0.5s linear;
+  background: rgb(24, 96, 138);
+}
+.logo{
+  height: 80px;
+  padding: 16px;
+}
+.menu{
+  height: 88%;
+  position: relative;
+  list-style: none;
+  padding: 0;
+}
+.menu li{
+  padding: 1rem;
+  margin: 8px 0;
+  border-radius: 8px;
+  transition: all 0.5s ease-in-out;
+}
+.menu li:hover,
+.active{
+  background: #2f262658;
+}
+.menu a{
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.menu span{
+  font-size: 1.2rem;
+  position: absolute;
+}
+.main-content{
+  position: relative;
+  background: whitesmoke;
+  width: 100%;
+  padding: 1rem;
+  align-items: center;
+}
+.logout{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.header{
+  position: sticky;
+  right: 0;
+  bottom: 0;
+
+}

@@ -1,0 +1,10 @@
+
+<body>
+  {% include 'general/components/site_header.html' %}
+  <h1>ลงทะเบียน</h1>
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">ลงทะเบียน</button>
+  </form>
+</body>

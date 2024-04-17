@@ -1,0 +1,18 @@
+{% extends 'student/components/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="content1">
+  <h1>หน้าข้อมูลข่าวสาร</h1>
+  <h2 class="test">รายการเผยแพร่</h2>
+  {% for item in publishes %}
+    <div>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.content }}</p>
+      {% if item.image %}
+      <img src="{{ item.image.url }}" alt="Image"style="width: 400px; height: auto;">
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

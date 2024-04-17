@@ -1,0 +1,18 @@
+{% extends 'teacher/components/base.html' %}
+
+{% block right_content %}
+  <form method="post" action="{% url 'delete_name' signup.id %}">
+    {% csrf_token %}
+    <button type="submit">ลบ</button>
+  </form>
+
+  <form method="post" action="{% url 'delete_publish' x.id %}">
+    {% csrf_token %}
+    <button type="submit">ลบ</button>
+  </form>
+
+  <form method="post" action="{% url 'reqrest_record' coop.id %}">
+    {% csrf_token %}
+    <button type="submit">ลบ</button>
+  </form>
+{% endblock %}
