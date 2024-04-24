@@ -11,6 +11,7 @@
                 <th>เอกสารรับรอง</th>
                 <th>จำนวนชั่วโมงหน่วยกิต</th>
                 <th>สถานะ</th>
+                <th>ตรวจสอบเอกสาร</th>
             </tr>
         </thead>
         <tbody>
@@ -19,20 +20,16 @@
         <td>{{ coop.user.first_name }}</td>
         <td>{{ coop.id }}</td>
         <td>{{ coop.title }}</td>
-        <td>{{ coop.date }}</td>
         <td><a href="{{ coop.certificate.url }}" target="_blank">ดูเอกสาร</a></td>
-        <td>{{ coop.score }}</td>
+        <th>{{ coop.score }}</th>
+        <td>{{ coop.status }}</td>
         <td>
             {{ coop.status }}
             <form method="post" action="{% url 'delete_record' coop.pk %}">
                 {% csrf_token %}
                 <button type="submit">ลบ</button>
             </form> 
-        </td>
-            <td>
-                
-                    
-                {% if coop.status == "pending" %}
+            {% if coop.status == "pending" %}
                     <form method="post" action="{% url 'change_status' coop.pk %}">
                     
                    {% csrf_token %}
@@ -42,7 +39,6 @@
                         
                     </form>
                 {% endif %}
-            </td>
             
        
     </tr>

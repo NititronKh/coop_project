@@ -1,2 +1,24 @@
 {% extends 'student/components/base.html' %}
-<h1>หน้าบันทึกผลหลังจากจบสหกิจ</h1>
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ส่งเอกสารหลังจบสหกิจ</title>
+</head>
+<body>
+    <h2>หน้าบันทึกหน่วยกิต</h2>
+    <div>
+      <form method="post" enctype="multipart/form-data" action="{% url 'after_completed' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ form.errors }}
+        <button type="submit">บันทึก</button>
+      </form>
+    </div>
+    <a href="{% url 'student_home' %}">กลับหน้าหลัก</a>
+
+</body>
+</html>
+{% endblock %}

@@ -6,5 +6,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("",include("django.contrib.auth.urls")),
     path("register",view=views.student, name="register"),
+    path("test",views.test,name='test')
     #path('login', views.login_view, name='login'),
 ]

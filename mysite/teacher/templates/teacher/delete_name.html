@@ -15,4 +15,8 @@
     {% csrf_token %}
     <button type="submit">ลบ</button>
   </form>
+  <form method="post" action="{% url 'delete_form' i.id %}">
+    {% csrf_token %}
+    <button type="submit">ลบ</button>
+  </form>
 {% endblock %}

@@ -40,11 +40,13 @@
           <i class="fas"></i>
           <span>แบบฟอร์มหลังจบสหกิจ</span>
         </a>
-      </li>
-      <li class="logout">
-        <a href="{% url 'logout' %}">
-          <span>ออกจากระบบ</span>
-        </a>
+        <li class="logout">
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">ออกจากระบบ</button>
+          </form>
+        </li>
+        
       {% else %}
 
       <li >
@@ -69,8 +71,8 @@
   <div class="main-content">
     <h2 class="top">ระบบติดตามการฝึกสหกิจ</h2>
     {% if user.is_authenticated %}
-    <span> <p>ผู้ใช้งาน:  {{ user.first_name }}  {{ user.student_id }} </p></span>
-    <span> <p> รหัส {{ user.student_id }} </p></span>
+    <span> <p>ผู้ใช้งาน:  {{ user.first_name }}  {{ user.last_name }} </p></span>
+    <span> <p> รหัส {{ user.id }} </p></span>
     {% endif %}
     
     {% block content %}

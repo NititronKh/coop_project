@@ -1,5 +1,3 @@
-<!-- ไฟล์ list_name.html -->
-
 {% extends 'teacher/components/base.html' %}
 
 {% block content %}
@@ -12,24 +10,50 @@
           <th>ชื่อ</th>
           <th>นามสกุล</th>
           <th>อีเมล</th>
+          <th>ชั่วโมงการอบรม</th>
+          <th>สถานะคำขอลงสหกิจ</th>
+          <th>สถานะเอกสารหลังจบสหกิจ</th>
           <th>แก้ไขข้อมูล</th>  
         </tr>
       </thead>
       <tbody>
-        {% for signup in list %}
+        {% for item in user_data %}
+        
+          
           <tr>
-            <td>{{ signup.id }}</td>
-            <td>{{ signup.first_name }}</td>
-            <td>{{ signup.last_name }}</td>
-            <td>{{ signup.username }}</td>
+            <td>{{ item.user.id }}</td>
+            <td>{{ item.user.first_name }}</td>
+            <td>{{ item.user.last_name }}</td>
+            <td>{{ item.user.username }}</td> <!-- ควรใช้ 'email' แทน 'username' -->
+            <td>{{ item.total_approved_score }}</td>
+            <!-- แสดงสถานะคำขอลงสหกิจ -->
             <td>
-              <form method="post" action="{% url 'delete_name' signup.pk %}">
+              {% for form in item.form1 %}
+                {{ form.status2 }}
+              {% empty %}
+                ไม่มีข้อมูล
+              {% endfor %}
+            </td>
+
+            <!-- สถานะเอกสารหลังจบสหกิจ -->
+            <td>
+              {% for form in item.form2 %}
+                {{ form.status3 }}
+              {% empty %}
+                ไม่มีข้อมูล
+              {% endfor %}
+            </td>
+
+            <!-- ปุ่มสำหรับลบบัญชีผู้ใช้ -->
+            <td>
+              <form method="post" action="{% url 'delete_name' item.user.pk %}">
                 {% csrf_token %}
-                <button type="submit">ลบ</button>
+                <button type="submit">ลบบัญชีผู้ใช้</button>
               </form>
             </td>
           </tr>
         {% endfor %}
+        
       </tbody>
     </table>
   </div>

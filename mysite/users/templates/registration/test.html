@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>ตัวอย่าง Dashboard</title>
+    <style>
+        /* การจัดวาง Layout */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh; /* ความสูงเต็มหน้าจอ */
+        }
+
+        /* เมนูฝั่งซ้าย */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 10px;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+
+        /* คอนเทนต์ฝั่งขวา */
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center; /* ตรงกลางในแนวนอน */
+            align-items: center;    /* ตรงกลางในแนวตั้ง */
+            padding: 20px;
+            background-color: #ecf0f1;
+            box-sizing: border-box;
+        }
+
+        .content-inner {
+            text-align: center; /* จัดตำแหน่งข้อความตรงกลาง */
+        }
+
+        .content-inner h1 {
+            margin-top: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- เมนูทางซ้าย -->
+    <div class="sidebar">
+        <h2>เมนูหลัก</h2>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#reports">รายงาน</a>
+        <a href="#settings">การตั้งค่า</a>
+    </div>
+
+    <!-- คอนเทนต์ทางขวา -->
+    <div class="content">
+        <div class="content-inner">
+            <h1>ยินดีต้อนรับสู่ Dashboard</h1>
+            <p>นี่คือส่วนคอนเทนต์ของ Dashboard</p>
+        </div>
+    </div>
+
+</body>
+</html>

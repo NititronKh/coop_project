@@ -1,36 +1,84 @@
 {% extends 'student/components/base.html' %}
 
 {% block content %}
-<body>
-    <h1>หน้าตรวจสอบหน่วยกิต</h1>
-    <h2>Coop List</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ลำดับที่</th>
-                <th>หัวข้อ</th>
-                <th>เอกสารรับรอง</th>
-                <th>จำนวนชั่วโมงหน่วยกิต</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in records %}
+<style>
+    .content {
+        display: flex;
+        justify-content: center; /* ตรงกลางในแนวนอน */
+        align-items: center;    /* ตรงกลางในแนวตั้ง */
+        height: 100vh;          /* ความสูงเต็มหน้าจอ */
+        margin-top: 5px;
+    }
 
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ record.title }}</td>
-                <td><a href="{{ record.certificate.url }}" target="_blank">ดูเอกสาร</a></td>
-                <td>{{ record.score }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-<tfoot>
-    <tr>
-        <td colspan="3">รวม</td>
-        <!-- หากไม่มีตัวแปร total_credit_hours สามารถลบได้ -->
-        <td><!-- แสดงจำนวนชั่วโมงหน่วยกิตรวม --></td>
-    </tr>
-</tfoot>
+    .content-inner {
+        text-align: center; /* จัดตำแหน่งข้อความตรงกลาง */
+    }
+
+    table {
+        width: 100%;
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: center; /* จัดตำแหน่งเซลล์ตรงกลาง */
+    }
+</style>
+
+<div class="content">
+    <div class="content-inner">
+
+        <h1>หน้าตรวจสอบหน่วยกิต</h1>
+        <h2 class="coop">Coop List</h2>
+
+        <!-- ตารางข้อมูล -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ลำดับที่</th>
+                    <th>หัวข้อ</th>
+                    <th>วันที่</th>
+                    <th>เอกสารรับรอง</th>
+                    <th>จำนวนชั่วโมงหน่วยกิต</th>
+                    <th>สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ record.title }}</td>
+                    <td>{{ record.date }}</td>
+                    <td><a href="{{ record.certificate.url }}" target="_blank">ดูเอกสาร</a></td>
+                    <td>{{ record.score }}</td>
+                    <td>{{ record.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p>รวม {{ total_credit_hours }} ชั่วโมง</p>
+
+        <!-- ตารางข้อมูลสหกิจ -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ชื่อ</th>
+                    <th>วันที่</th>
+                    <th>เอกสารรับรอง</th>
+                    <th>สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in form %}
+                <tr>
+                    <td>{{ record.user.first_name }}</td>
+                    <td>{{ record.date2 }}</td>
+                    <td><a href="{{ record.certificate2.url }}" target="_blank">ดูเอกสาร</a></td>
+                    <td>{{ record.status2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

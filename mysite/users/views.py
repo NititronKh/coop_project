@@ -55,3 +55,5 @@ def student(request):
     else:
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})'''
+def test(req):
+    return render(req,'registration/test.html')

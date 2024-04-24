@@ -15,7 +15,7 @@ class CreateformForm(forms.ModelForm):
         model = Createform
         fields = ['date2', 'certificate2']
     
-class RegiterForm(forms.ModelForm):
+class AfterCompleteform(forms.ModelForm):
     class Meta:
-        models = Student
-        fields =  ['student_id']
+        model = AfterCompleted
+        fields = ['date3', 'certificate3']
