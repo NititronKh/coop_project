@@ -79,6 +79,7 @@
  {% if user.is_authenticated %}
  <div style="margin-top: 20px;color: rgb(71, 72, 69);">
    <span > <p>ผู้ใช้งาน:  {{ user.first_name }}  {{ user.last_name }} </p></span>
+   <p style="font-size: 10px;color: red;">(ระบบนี้เป็นส่วนหนึ่งของโปรเจกต์นักศึกษาของมหาวิทยาลัยอุบลราชธานี ภายใต้การดูแลของอาจารย์ เกรียงศักดิ์ ตรีประพิณ กรุณาติดต่อ Kriengsak.s@ubu.ac.th หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม)</p>
  </div>
  {% endif %}
       {% block content %}
