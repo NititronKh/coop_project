@@ -1,19 +1,28 @@
-from django.contrib.auth.forms import UserCreationForm
+# accounts/forms.py
 from django import forms
-from django.contrib.auth import get_user_model
-from .models import Register
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
 
-class RegisterForm(UserCreationForm):
-    student_id = forms.IntegerField()
-    username = forms.EmailField(max_length=100 , label='email')
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.save()
-        student_id = self.cleaned_data.get("student_id")
-        Register.objects.create(user=user, student_id=student_id)
-        return user
-
+# ฟอร์มสำหรับนักเรียน (Student)
+class StudentRegistrationForm(UserCreationForm):
     class Meta:
-        model = get_user_model()
-        fields = ['first_name', 'last_name', 'username', 'student_id','password1', 'password2']
+        model = CustomUser
+        fields = ['first_name','last_name','email', 'student_id', 'password1', 'password2']
+
+# ฟอร์มสำหรับครู (Teacher)
+class TeacherRegistrationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name','last_name','email', 'password1', 'password2']
+
+# ฟอร์มสำหรับเจ้าหน้าที่ (Staff)
+class StaffRegistrationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name','last_name','email', 'password1', 'password2']
+
+# ฟอร์มสำหรับผู้ดูแลระบบ (Superuser)
+class SuperuserRegistrationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email','password1', 'password2']

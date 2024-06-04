@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <!-- นำเข้า Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- นำเข้า FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // ฟังก์ชันสำหรับการพับเมนู
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("w-64");
+            sidebar.classList.toggle("w-14");
+            const textElements = document.querySelectorAll(".menu-text");
+            textElements.forEach(element => {
+                element.classList.toggle("hidden");
+            });
+        }
+    </script>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+  
+  <!-- Sidebar -->
+  <div id="sidebar" class="w-64 bg-gray-700 text-white flex flex-col transition-all duration-300 sticky top-0 h-screen">
+    <!-- ปุ่มพับ -->
+    <button onclick="toggleSidebar()" class="self-end text-white bg-gray-600 p-2 rounded hover:bg-gray-500 transition" style="margin-right: 12px; margin-top: 12px;">
+      <i class="fas fa-bars" style="font-size: 20px;"></i>
+    </button>
+
+    <ul class="mt-4 space-y-3 flex-1">
+      <li>
+        <a href="{% url 'index' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-home" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">หน้าหลัก</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'createsuperuser' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-user-shield" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">สร้างผู้จัดการ</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'createteacher' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-chalkboard-teacher" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">สร้างบัญชีอาจารย์</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'createstaff' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-user-cog" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">สร้างบัญชีพี่เลี้ยง</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'admin_name' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-users-cog" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">รายชื่อผู้จัดการ</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'teacher_name' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-user-graduate" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">รายชื่ออาจารย์</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'students_name' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-id-card" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">รายชื่อนักศึกษา</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'staff_name' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-user-tie" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">รายชื่อพี่เลี้ยง</span>
+        </a>
+      </li>
+      <li>
+        <form method="post" action="{% url 'logout' %}" class="flex items-center">
+          {% csrf_token %}  <!-- เพิ่ม CSRF token เพื่อความปลอดภัย -->
+          <button type="submit" class="flex items-center hover:bg-gray-600 p-3 rounded transition" style="margin-top: -15px; color: red;">
+            <i class="fas fa-sign-out-alt" style="font-size: 25px;color: red;"></i>
+            <span class="menu-text ml-3">ออกจากระบบ</span>
+          </button>
+        </form>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6 overflow-y-auto">
+    <!-- ใช้ overflow-y-auto เพื่อให้เนื้อหาหลักสามารถเลื่อนได้ -->
+   <div style="background-color: white; margin: -2%; padding: 1%; display: flex;border: 2px solid rgb(85, 127, 164);">
+     <img style="height: 80px; width: 250px;margin-right: 10px;" src="{% static 'student/logo-ubu.jpg' %}">
+     <h1 style="text-align: center; font-size: 250%;flex-grow: 1;color: rgb(61, 61, 187);">ระบบติดตามการฝึกสหกิจศึกษา</h1>
+   </div>
+ {% if user.is_authenticated %}
+ <div style="margin-top: 20px;color: rgb(71, 72, 69);">
+   <span > <p>ผู้ใช้งาน:  {{ user.email }}  </p></span>
+ </div>
+ {% endif %}
+      {% block content %}
+      <!-- เนื้อหาจะถูกเพิ่มที่นี่ -->
+      {% endblock %}
+  </div>
+
+</body>
+</html>

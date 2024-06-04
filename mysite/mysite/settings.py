@@ -38,9 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "student",
-    "general",
     "teacher",
     "users",
+    "createuser",
+    "staff",
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,4 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
 
 LOGIN_REDIRECT_URL = 'student_home'
 LOGOUT_REDIRECT_URL = 'student_home'
+AUTH_USER_MODEL = 'users.CustomUser'

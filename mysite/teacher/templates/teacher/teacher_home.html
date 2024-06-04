@@ -2,20 +2,28 @@
 {% load static %}
 
 {% block content %}
-{% for item in publishes %}
-    <div>
-      <h3>{{ item.title }}</h3>
-      <p>{{ item.content }}</p>
-      <p>{{ item.image.publish_images }}</p>
-      {{ item }}
-      {% if item in publishes %}
-      <img src="{{ item.image.url }}" alt="Image"style="width: 400px; height: auto;">
-      {% endif %}
-      <form method="post", action="{% url 'delete_publish' item.pk %}">
-        {% csrf_token %}
-        <button type="submit">ลบ</button>
-      </form>
+<div class="flex justify-center items-center min-h-screen"> <!-- ใช้ Flex เพื่อจัดให้อยู่ตรงกลาง -->
+  <div class="w-3/4 bg-white p-8 rounded shadow-lg" style="margin-top: 4%;"> <!-- กำหนดความกว้างและใช้ขอบมน -->
+    <h1 class="text-2xl font-bold text-center mb-6" style="color: blue;">หน้าข้อมูลข่าวสาร</h1>
+    <div class="space-y-6"> <!-- จัดระยะห่างระหว่างเนื้อหา -->
+      {% for item in publishes reversed %} <!-- เรียงลำดับโพสต์ใหม่สุดไว้ข้างบน -->
+        <div class="p-4 border border-gray-300 rounded mb-6"> <!-- เพิ่มเส้นขอบและระยะห่างระหว่างโพสต์ -->
+          <h3 class="text-lg font-semibold mb-2">{{ item.title }} ({{ item.user.first_name}} {{item.user.last_name }})</h3>
+          <p class="text-gray-700 mb-4">{{ item.content }}</p> <!-- เพิ่มสีข้อความ -->
+          {% if item.image %}
+          <img style="width: 100%; height: auto;" src="{{ item.image.url }}" alt="Image" class="w-full h-auto rounded mb-4"> <!-- ปรับขนาดและขอบมน -->
+          {% endif %}
+          {% if item.user == request.user %} <!-- เพิ่มเงื่อนไขเช็คว่าโพสต์เป็นของผู้ใช้ปัจจุบันหรือไม่ -->
+          <div class="text-right">
+            <form method="post" action="{% url 'delete_publish' item.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition">ลบ</button> <!-- ปุ่มลบที่มีสไตล์ -->
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      {% endfor %}
     </div>
-{% endfor %}
+  </div>
+</div>
 {% endblock %}
-

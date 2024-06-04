@@ -1,84 +1,95 @@
 {% extends 'student/components/base.html' %}
 
 {% block content %}
-<style>
-    .content {
-        display: flex;
-        justify-content: center; /* ตรงกลางในแนวนอน */
-        align-items: center;    /* ตรงกลางในแนวตั้ง */
-        height: 100vh;          /* ความสูงเต็มหน้าจอ */
-        margin-top: 5px;
-    }
-
-    .content-inner {
-        text-align: center; /* จัดตำแหน่งข้อความตรงกลาง */
-    }
-
-    table {
-        width: 100%;
-    }
-    
-    th, td {
-        padding: 10px;
-        text-align: center; /* จัดตำแหน่งเซลล์ตรงกลาง */
-    }
-</style>
-
-<div class="content">
-    <div class="content-inner">
-
-        <h1>หน้าตรวจสอบหน่วยกิต</h1>
-        <h2 class="coop">Coop List</h2>
+<div class="flex justify-center items-center min-h-screen bg-gray-100" style="margin-top: 2%;"> <!-- Flex เพื่อจัดเลย์เอาต์ -->
+    <div class="w-11/12 md:w-3/4 lg:w-2/3 bg-white shadow-lg rounded-lg p-6"> <!-- ขอบตาราง -->
+        <div class="text-center">
+            <h1 class="text-2xl font-bold mb-4">หน้าตรวจสอบข้อมูล</h1> <!-- ขนาดหัวข้อ -->
+        </div>
 
         <!-- ตารางข้อมูล -->
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ลำดับที่</th>
-                    <th>หัวข้อ</th>
-                    <th>วันที่</th>
-                    <th>เอกสารรับรอง</th>
-                    <th>จำนวนชั่วโมงหน่วยกิต</th>
-                    <th>สถานะ</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in records %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ record.title }}</td>
-                    <td>{{ record.date }}</td>
-                    <td><a href="{{ record.certificate.url }}" target="_blank">ดูเอกสาร</a></td>
-                    <td>{{ record.score }}</td>
-                    <td>{{ record.status }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="overflow-x-auto"> <!-- เพื่อให้ตารางเลื่อนได้ถ้าใหญ่เกิน -->
+            <table class="min-w-full divide-y divide-gray-200"> <!-- แบ่งเส้น -->
+                <thead class="bg-gray-50"> <!-- สีพื้นหลัง -->
+                    <tr>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ลำดับที่</th> <!-- ตรงซ้าย -->
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">หัวข้อ</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">วันที่</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">เอกสารรับรอง</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">จำนวนชั่วโมง</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200"> <!-- เส้นแบ่งระหว่างแถว -->
+                    {% for record in records %}
+                    <tr>
+                        <td class="px-4 py-2">{{ forloop.counter }}</td>
+                        <td class="px-4 py-2">{{ record.title }}</td>
+                        <td class="px-4 py-2">{{ record.date }}</td>
+                        <td class="px-4 py-2"><a href="{{ record.certificate.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td> <!-- ลิงก์สีฟ้า -->
+                        <td class="px-4 py-2">{{ record.score }}</td>
+                        <td class="px-4 py-2">{{ record.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-        <p>รวม {{ total_credit_hours }} ชั่วโมง</p>
+        <p class="mt-6">รวม {{ total_credit_hours }} ชั่วโมง</p>
 
         <!-- ตารางข้อมูลสหกิจ -->
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ชื่อ</th>
-                    <th>วันที่</th>
-                    <th>เอกสารรับรอง</th>
-                    <th>สถานะ</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in form %}
-                <tr>
-                    <td>{{ record.user.first_name }}</td>
-                    <td>{{ record.date2 }}</td>
-                    <td><a href="{{ record.certificate2.url }}" target="_blank">ดูเอกสาร</a></td>
-                    <td>{{ record.status2 }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <h2 class="text-lg text-gray-600 mt-8 mb-4">สถานะเอกสารขอลงสหกิจ</h2>
+        <div class="overflow-x-auto"> <!-- เพื่อให้ตารางเลื่อนได้ถ้าใหญ่เกิน -->
+            <table class="min-w-full divide-y divide-gray-200"> <!-- แบ่งเส้น -->
+                <thead class="bg-gray-50"> <!-- สีพื้นหลัง -->
+                    <tr>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ลำดับที่</th> <!-- ตรงซ้าย -->
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ชื่อ-สกุล</th> <!-- ตรงซ้าย -->
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">วันที่</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">เอกสาร</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200"> <!-- เส้นแบ่งระหว่างแถว -->
+                    {% for record in form %}
+                    <tr>
+                        <td class="px-4 py-2">{{ forloop.counter }}</td>
+                        <td class="px-4 py-2">{{ record.user.first_name}} {{ record.user.last_name }}</td>
+                        <td class="px-4 py-2">{{ record.date2 }}</td>
+                        <td class="px-4 py-2"><a href="{{ record.certificate2.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td>
+                        <td class="px-4 py-2">{{ record.status2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ตารางข้อมูลสหกิจ -->
+        <h2 class="text-lg text-gray-600 mt-8 mb-4">สถานะเอกสารหลังจบสหกิจ</h2>
+        <div class="overflow-x-auto"> <!-- เพื่อให้ตารางเลื่อนได้ถ้าใหญ่เกิน -->
+            <table class="min-w-full divide-y divide-gray-200"> <!-- แบ่งเส้น -->
+                <thead class="bg-gray-50"> <!-- สีพื้นหลัง -->
+                    <tr>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ลำดับที่</th> <!-- ตรงซ้าย -->
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ชื่อ-สกุล</th> <!-- ตรงซ้าย -->
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">วันที่</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">เอกสารรับรอง</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200"> <!-- เส้นแบ่งระหว่างแถว -->
+                    {% for i in form2 %}
+                    <tr>
+                        <td class="px-4 py-2">{{ forloop.counter }}</td>
+                        <td class="px-4 py-2">{{ record.user.first_name}} {{ record.user.last_name }}</td>
+                        <td class="px-4 py-2">{{ i.date3 }}</td>
+                        <td class="px-4 py-2"><a href="{{ record.certificate3.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td>
+                        <td class="px-4 py-2">{{ i.status3 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}

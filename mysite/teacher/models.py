@@ -1,6 +1,8 @@
 from django.db import models
-
+from django.contrib.auth import get_user_model
+user_model = get_user_model()
 class Publish(models.Model):
+    user = models.ForeignKey(user_model, on_delete=models.CASCADE, verbose_name='ผู้ใช้')
     DEFAULT_TITLE = "ประกาศ"
 
     title = models.CharField(

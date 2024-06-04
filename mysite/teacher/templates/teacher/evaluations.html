@@ -1,0 +1,44 @@
+{% extends 'teacher/components/base.html' %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">ตรวจสอบเอกสาร</h2>
+  <div class="overflow-x-auto">
+    <table class="w-full bg-white border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2 border">รหัสนักศึกษา</th>
+          <th class="p-2 border">ชื่อ</th>
+          <th class="p-2 border">วันที่</th>
+          <th class="p-2 border">เอกสาร</th>
+          <th class="p-2 border">ผู้ประเมิน</th>
+          <th class="p-2 border">ยกเลิกการประเมิน</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in evaluations %}
+            <tr class="hover:bg-gray-50">
+              <td class="p-2 border">{{ item.student.student_id }}</td>
+              <td class="p-2 border">{{ item.student.first_name }} {{ item.student.last_name }}</td>
+              <td class="p-2 border">{{ item.date }}</td>
+              <td class="p-2 border">
+                <a href="{{ item.document.url }}" target="_blank" class="text-blue-500 hover:underline">
+                  ดูเอกสาร
+                </a> </td>
+            
+              <td class="p-2 border">{{ item.evaluator.email }}</td>
+              <td class="p-2 border">
+                <form method="post" action="{% url 'delete_evaluations' item.pk %}" style="text-align: center; font-size: 12px;">
+                  {% csrf_token %}
+                  <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition" >ลบ</button> <!-- ปุ่มลบที่มีสไตล์ -->
+                </form>
+              </td>
+              
+            </tr>
+           {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

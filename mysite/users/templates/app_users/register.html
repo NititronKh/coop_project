@@ -1,23 +1,34 @@
 {% extends 'student/components/base.html' %}
 {% block content %}
-<body >
-
-    <div>
-        <h1>ลงทะเบียน</h1>
-    
-        <form method="post" action="{% url 'register' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <p>
-                <button type="submit">ลงทะเบียน</button>
-            </p>
-        </form>
+<div class="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6" style="background-color: rgb(219, 221, 221);">
+  <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">ลงทะเบียน</h2>
+  
+  <form method="post" enctype="multipart/form-data" action="{% url 'register' %}">
+    {% csrf_token %}
+    <div class="space-y-4">
+      <!-- ส่วนกรอกข้อมูล -->
+      {% for field in form %}
+        <div class="form-group">
+          {{ field.label_tag }}
+          {{ field.errors }}
+          <div class="mt-1" style="color: black;">
+            {{ field }}
+          </div>
+          <!-- แสดงข้อความช่วยเหลือ -->
+          <div class="text-sm text-gray-500">{{ field.help_text }}</div>  <!-- ข้อความช่วย -->
+        </div>
+      {% endfor %}
     </div>
-</body>
-
-
-
-<a href="{% url 'login' %}">
-    <button type="submit">เข้าสู่ระบบ</button>
-</a>
+    
+    <div class="mt-6 text-center">
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">ลงทะเบียน</button>
+    </div>
+  </form>
+  
+  <div class="mt-4 text-center">
+    <p>มีบัญชีแล้ว? 
+      <a href="{% url 'login' %}" class="text-blue-600 hover:underline">เข้าสู่ระบบ</a>
+    </p>
+  </div>
+</div>
 {% endblock %}

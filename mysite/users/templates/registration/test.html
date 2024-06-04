@@ -1,78 +1,89 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>ตัวอย่าง Dashboard</title>
-    <style>
-        /* การจัดวาง Layout */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh; /* ความสูงเต็มหน้าจอ */
+    <!-- นำเข้า Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- นำเข้า FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        // ฟังก์ชันสำหรับการพับเมนู
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("w-64");
+            sidebar.classList.toggle("w-14");
+            const textElements = document.querySelectorAll(".menu-text");
+            textElements.forEach(element => {
+                element.classList.toggle("hidden");
+            });
         }
-
-        /* เมนูฝั่งซ้าย */
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-
-        .sidebar h2 {
-            margin-top: 0;
-        }
-
-        .sidebar a {
-            text-decoration: none;
-            color: white;
-            display: block;
-            padding: 10px;
-        }
-
-        .sidebar a:hover {
-            background-color: #34495e;
-        }
-
-        /* คอนเทนต์ฝั่งขวา */
-        .content {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center; /* ตรงกลางในแนวนอน */
-            align-items: center;    /* ตรงกลางในแนวตั้ง */
-            padding: 20px;
-            background-color: #ecf0f1;
-            box-sizing: border-box;
-        }
-
-        .content-inner {
-            text-align: center; /* จัดตำแหน่งข้อความตรงกลาง */
-        }
-
-        .content-inner h1 {
-            margin-top: 0;
-        }
-
-    </style>
+    </script>
 </head>
-<body>
-    <!-- เมนูทางซ้าย -->
-    <div class="sidebar">
-        <h2>เมนูหลัก</h2>
-        <a href="#dashboard">Dashboard</a>
-        <a href="#reports">รายงาน</a>
-        <a href="#settings">การตั้งค่า</a>
-    </div>
+<body class="flex min-h-screen bg-gray-100"> <!-- ใช้ min-h-screen เพื่อให้แน่ใจว่ามีความสูงขั้นต่ำ -->
+  
+  <!-- Sidebar -->
+  <div id="sidebar" class="w-64 bg-gray-700 text-white flex flex-col transition-all duration-300 sticky top-0 h-screen" > <!-- ใช้ h-screen เพื่อให้แน่ใจว่าครอบคลุมความสูงทั้งหมด -->
+    <!-- ปุ่มพับ -->
+    <button onclick="toggleSidebar()" class="self-end text-white bg-gray-600 p-2 rounded hover:bg-gray-500 transition" style="margin-right: 12px; margin-top: 12px;">
+      <i class="fas fa-bars" style="font-size: 20px;" ></i>
+    </button>
 
-    <!-- คอนเทนต์ทางขวา -->
-    <div class="content">
-        <div class="content-inner">
-            <h1>ยินดีต้อนรับสู่ Dashboard</h1>
-            <p>นี่คือส่วนคอนเทนต์ของ Dashboard</p>
-        </div>
-    </div>
+    <ul class="mt-4 space-y-4"> <!-- จัดระยะห่างระหว่างเมนู -->
+      <li>
+        <a href="{% url 'teacher_home' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-home"></i> <!-- ไอคอน -->
+          <span class="ml-3">หน้าหลัก</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'list_name' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-list"></i> <!-- แก้ไขไอคอน -->
+          <span class="ml-3">ทะเบียนรายชื่อ</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'publish' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-bullhorn"></i> <!-- ไอคอนประชาสัมพันธ์ -->
+          <span class="ml-3">ประชาสัมพันธ์</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'reqrest_form' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-file-alt"></i> <!-- ไอคอนแบบฟอร์ม -->
+          <span class="ml-3">คำขอลงสหกิจ</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'reqrest_record' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-clipboard-list"></i> <!-- ไอคอนบันทึกหน่วยกิต -->
+          <span class="ml-3">คำขอบันทึกหน่วยกิต</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'create_user' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-user-plus"></i> <!-- ไอคอนสร้างผู้ใช้ -->
+          <span class="ml-3">สร้างบัญชีผู้ใช้</span>
+        </a>
+      </li>
+      <li class="mt-auto"> <!-- วางไว้ด้านล่างสุด -->
+        <a href="{% url 'home' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="ml-3">ออกจากระบบ</span>
+        </a>
+      </li>
+    </ul>
 
+  </div>
+
+  <!-- Main Content -->
+    <div class="flex-1 p-6 overflow-y-auto">
+       <!-- ใช้ overflow-y-auto เพื่อให้เนื้อหาหลักสามารถเลื่อนได้ -->
+      <div style="background-color: rgb(217, 219, 220); margin: -2%;padding: 1%;">
+
+        <h1 style="text-align: center; font-size: 250%;">ระบบติดตามการฝึกสหกิจ</h1>
+    </div>
+    {% block content %}
+    <!-- เนื้อหาจะถูกเพิ่มที่นี่ -->
+    {% endblock %}
+  </div>
 </body>
 </html>

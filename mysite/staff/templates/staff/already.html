@@ -1,0 +1,11 @@
+{% extends 'staff/components/base.html' %}
+{% block content %}
+<div class="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6" style="background-color: rgb(219, 221, 221); margin-top: 55px;">
+  <h2  style="color: red; text-align: center;" class="text-2xl font-bold text-gray-800 mb-4">ไม่สามารถบันทึกได้!</h2>
+  
+  <div class="mt-4 text-center">
+    <p class="text-gray-700">ท่านได้ประเมินนักศึกษาแล้ว</p>
+    <a href="{% url 'staff_home' %}" class="text-blue-600 hover:underline mt-4 block">กลับหน้าหลัก</a>
+  </div>
+</div>
+{% endblock %}

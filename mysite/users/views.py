@@ -1,59 +1,44 @@
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render,redirect
+from django.contrib.auth import login
+from django.contrib.auth import views as auth_views
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.views import View
+from django.contrib.auth.decorators import login_required
 from .forms import *
-from student.models import Student
+from django.contrib.auth import logout
 
 
-'''def register(request):
+class CustomLoginView(auth_views.LoginView):
+    template_name = 'registration/login.html'
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.role == 'student':
+            return reverse('student_home')  
+        elif user.role == 'teacher':
+            return reverse('teacher_home')  
+        elif user.role == 'staff':
+            return reverse('staff_home')  
+        elif user.role == 'superuser':
+            return reverse('index') 
+        else:
+            return reverse('default_home') 
+@login_required    
+def logout_view(request):
+    logout(request)  
+    return redirect('student_home') 
+
+
+def register(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        form = StudentRegistrationForm(request.POST)
         if form.is_valid():
-            # Create user account
-            form.save()
-            # Get the username and password
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            # Authenticate user and log in
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('student_home')  # Redirect to home page after successful registration
+            user = form.save()
+            user.role ='student'
+            user.save()
+            login(request, user)  
+            return redirect('student_home')  
     else:
-        form = RegisterForm()
-    return render(request, 'app_users/register.html', {'form': form})'''
+        form = StudentRegistrationForm()
 
-def student(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            # Create user account
-            form.save()
-            # Get the username and password
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            # Authenticate user and log in
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('student_home')  # Redirect to home page after successful registration
-    else:
-        form = RegisterForm()
     return render(request, 'app_users/register.html', {'form': form})
-
-'''def login_view(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            # Get the username and password
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            # Authenticate user and log in
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('student/student_home')  # Redirect to home page after successful login
-    else:
-        form = LoginForm()
-    return render(request, 'registration/login.html', {'form': form})'''
-def test(req):
-    return render(req,'registration/test.html')

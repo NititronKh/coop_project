@@ -1,62 +1,110 @@
-<!-- ไฟล์ base.html -->
-{% load static %} <!-- เพิ่มบรรทัดนี้ -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static 'student/main.css' %}">
-    <link rel="stylesheet" href="{% static 'student/normalize.css' %}">
+    <!-- นำเข้า Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- นำเข้า FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        // ฟังก์ชันสำหรับการพับเมนู
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("w-64");
+            sidebar.classList.toggle("w-14");
+            const textElements = document.querySelectorAll(".menu-text");
+            textElements.forEach(element => {
+                element.classList.toggle("hidden");
+            });
+        }
+    </script>
 </head>
-<body>
-  <div class="sidebar">
-    <ul class="menu">
-      <li >
-        <a href="{% url 'teacher_home' %}">
-          <i class="fas fa-star"></i>
-          <span>หน้าหลัก</span>
+<body class="flex min-h-screen bg-gray-100"> <!-- ใช้ min-h-screen เพื่อให้แน่ใจว่ามีความสูงขั้นต่ำ -->
+  
+  <!-- Sidebar -->
+  <div id="sidebar" class="w-64 bg-gray-700 text-white flex flex-col transition-all duration-300 sticky top-0 h-screen" > <!-- ใช้ h-screen เพื่อให้แน่ใจว่าครอบคลุมความสูงทั้งหมด -->
+    <!-- ปุ่มพับ -->
+    <button onclick="toggleSidebar()" class="self-end text-white bg-gray-600 p-2 rounded hover:bg-gray-500 transition" style="margin-right: 12px; margin-top: 12px;">
+      <i class="fas fa-bars" style="font-size: 20px;"></i>
+    </button>
+
+    <ul class="mt-4 space-y-3 flex-1" style="margin-top: 1px;">
+      <li>
+        <a href="{% url 'teacher_home' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-home" style="font-size: 25px;"></i>
+          <span class="menu-text ml-3">หน้าหลัก</span>
         </a>
       </li>
       <li>
-        <a href="{% url 'list_name' %}">
-          <i class="fas"></i>
-          <span>ทะเบียนรายชื่อ</span>
+        <a href="{% url 'list_name' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-list"style="font-size: 25px;"></i> <!-- แก้ไขไอคอน -->
+          <span class="menu-text ml-3">ทะเบียนรายชื่อ</span>
         </a>
       </li>
       <li>
-        <a href="{% url 'publish' %}">
-          <i class="fas"></i>
-          <span>ประชาสัมพันธ์</span>
-        </a> 
-      </li>
-      <li>
-        <a href="{% url 'reqrest_form' %}">
-          <i class="fas"></i>
-          <span>คำขอลงสหกิจ</span>
+        <a href="{% url 'publish' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-bullhorn"style="font-size: 25px;"></i> <!-- ไอคอนประชาสัมพันธ์ -->
+          <span class="menu-text ml-3">ประชาสัมพันธ์</span>
         </a>
       </li>
       <li>
-        <a href="{% url 'reqrest_record' %}">
-          <i class="fas"></i>
-          <span>คำขอบันทึกหน่วยกิต</span>
+        <a href="{% url 'reqrest_form' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-file-alt"style="font-size: 25px;"></i> <!-- ไอคอนแบบฟอร์ม -->
+          <span class="menu-text ml-3">คำขอลงสหกิจ</span>
         </a>
       </li>
       <li>
-        <a href="{% url 'create_user' %}">
-          <i class="fas"></i>
-          <span>สร้างบัญชีผู้ใช้</span>
+        <a href="{% url 'reqrest_record' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-clipboard-list"style="font-size: 25px;"></i> <!-- ไอคอนบันทึกหน่วยกิต -->
+          <span class="menu-text ml-3">คำขอบันทึกหน่วยกิต</span>
         </a>
       </li>
-      <li class="logout">
-        <a href="{% url 'home' %}">
-          <span>ออกจากระบบ</span>
+      <li>
+        <a href="{% url 'after' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-trophy" style="font-size: 25px;"></i>  <!-- ไอคอนบันทึกหน่วยกิต -->
+          <span class="menu-text ml-3">เอกสารหลังจบสหกิจ</span>
         </a>
+      </li>
+      <li>
+        <a href="{% url 'create_staff' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-user-plus"style="font-size: 25px;"></i> <!-- ไอคอนสร้างผู้ใช้ -->
+          <span class="menu-text ml-3">สร้างบัญชีพี่เลี้ยง</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'evaluations' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
+          <i class="fas fa-chart-line" style="font-size: 25px;"></i> <!-- ใช้ไอคอน "fas fa-chart-line" -->
+          <span class="menu-text ml-3">ผลการประเมิน</span>
+        </a>
+      </li>
+      
+      
+
+        <form method="post" action="{% url 'logout' %}" class="flex items-center">
+          {% csrf_token %}  <!-- เพิ่ม CSRF token เพื่อความปลอดภัย -->
+          <button type="submit" class="flex items-center hover:bg-gray-600 p-3 rounded transition" style="margin-top: -12px;">
+            <i class="fas fa-sign-out-alt" style="font-size: 25px; color: red;"></i>
+            <span style="color: red;" class="menu-text ml-3">ออกจากระบบ</span>
+          </button>
+        </form>
       </li>
     </ul>
   </div>
-  <div class="main-content">
-    <h2 class="top">ระบบติดตามการฝึกสหกิจ</h2>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6 overflow-y-auto">
+       <!-- ใช้ overflow-y-auto เพื่อให้เนื้อหาหลักสามารถเลื่อนได้ -->
+       <div style="background-color: white; margin: -2%; padding: 1%; display: flex;border: 2px solid rgb(85, 127, 164);">
+        <img style="height: 80px; width: 250px;margin-right: 10px;" src="{% static 'student/logo-ubu.jpg' %}">
+        <h1 style="text-align: center; font-size: 250%;flex-grow: 1;color: rgb(61, 61, 187);">ระบบติดตามการฝึกสหกิจศึกษา</h1>
+      </div>
+    
+  <h4 style="margin-top: 20px;">ผู้ใช้งาน: {{ user.email }}</h4>
+
+  
     {% block content %}
-    {% endblock%}
+    <!-- เนื้อหาจะถูกเพิ่มที่นี่ -->
+    {% endblock %}
   </div>
 </body>
 </html>
