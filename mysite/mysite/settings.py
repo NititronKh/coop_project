@@ -141,3 +141,5 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
 LOGIN_REDIRECT_URL = 'student_home'
 LOGOUT_REDIRECT_URL = 'student_home'
 AUTH_USER_MODEL = 'users.CustomUser'
+ALLOWED_HOSTS = ['192.168.1.114', 'localhost', '127.0.0.1']
+

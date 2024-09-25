@@ -77,9 +77,9 @@
      <h1 style="text-align: center; font-size: 250%;flex-grow: 1;color: rgb(61, 61, 187);">ระบบติดตามการฝึกสหกิจศึกษา</h1>
    </div>
  {% if user.is_authenticated %}
- <div style="margin-top: 20px;color: rgb(71, 72, 69);">
-   <span > <p>ผู้ใช้งาน:  {{ user.first_name }}  {{ user.last_name }} </p></span>
-   <p style="font-size: 10px;color: red;">(ระบบนี้เป็นส่วนหนึ่งของโปรเจกต์นักศึกษาของมหาวิทยาลัยอุบลราชธานี ภายใต้การดูแลของอาจารย์ เกรียงศักดิ์ ตรีประพิณ กรุณาติดต่อ Kriengsak.s@ubu.ac.th หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม)</p>
+ <p style="font-size: 10px;color : red; margin-top: 20px;">(ระบบนี้เป็นส่วนหนึ่งของโปรเจกต์นักศึกษาของมหาวิทยาลัยอุบลราชธานี ภายใต้การดูแลของอาจารย์ เกรียงศักดิ์ ตรีประพิณ กรุณาติดต่อ Kriengsak.s@ubu.ac.th หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม)</p>
+ <div style="margin-top: -1px;color: rgb(71, 72, 69);">
+   <span> <p>ผู้ใช้งาน:  {{ user.first_name }}  {{ user.last_name }} </p></span>
  </div>
  {% endif %}
       {% block content %}

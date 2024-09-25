@@ -13,7 +13,7 @@
             <th class="p-1 border">ชั่วโมงการอบรม</th>
             <th class="p-1 border">สถานะคำขอลงสหกิจ</th>
             <th class="p-1 border">สถานะเอกสารหลังจบสหกิจ</th>
-            <th class="p-1 border">ตรวจสอบ/แก้ไข</th>
+            <th class="p-1 border">ลบรายชื่อ</th>
           </tr>
         </thead>
         <tbody>
@@ -74,7 +74,7 @@
                 {% endfor %}
               </td>
               <!-- ปุ่มสำหรับลบบัญชีผู้ใช้ -->
-              <td class="p-1 border">
+              <td class="p-1 border" style="text-align: center;">
                 <form method="post" action="{% url 'delete_name' item.user.pk %}">
                   {% csrf_token %}
                   <button type="submit"  class="bg-red-500 text-white py-1 px-2 rounded">

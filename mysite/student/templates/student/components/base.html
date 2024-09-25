@@ -102,16 +102,18 @@
         <img style="height: 80px; width: 250px;margin-right: 10px;" src="{% static 'student/logo-ubu.jpg' %}">
         <h1 style="text-align: center; font-size: 250%;flex-grow: 1;color: rgb(61, 61, 187);">ระบบติดตามการฝึกสหกิจศึกษา</h1>
       </div>
+      <p style="font-size: 10px;color: red; margin-top: 20px;padding: 5px;">(ระบบนี้เป็นส่วนหนึ่งของโปรเจกต์นักศึกษาของมหาวิทยาลัยอุบลราชธานี ภายใต้การดูแลของอาจารย์ เกรียงศักดิ์ ตรีประพิณ กรุณาติดต่อ kriengsak.t@ubu.ac.th หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม)</p>
     {% if user.is_authenticated %}
-    <div style="margin-top: 20px;color: rgb(71, 72, 69);">
+    <div style="margin-top: -1px;color: rgb(71, 72, 69);font-size: 10px;">
       <span > <p>ผู้ใช้งาน:  {{ user.first_name }}  {{ user.last_name }} </p></span>
     <span> <p> รหัสนักศึกษา: {{ user.student_id }} </p></span>
-    <p style="font-size: 10px;color: red;">(ระบบนี้เป็นส่วนหนึ่งของโปรเจกต์นักศึกษาของมหาวิทยาลัยอุบลราชธานี ภายใต้การดูแลของอาจารย์ เกรียงศักดิ์ ตรีประพิณ กรุณาติดต่อ Kriengsak.s@ubu.ac.th หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม)</p>
     </div>
     {% endif %}
-    {% block content %}
+    <div >
+      {% block content %}
     <!-- เนื้อหาจะถูกเพิ่มที่นี่ -->
     {% endblock %}
+    </div>
   </div>
 </body>
 </html>
