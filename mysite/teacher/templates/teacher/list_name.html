@@ -1,30 +1,31 @@
 {% extends 'teacher/components/base.html' %}
 
 {% block content %}
+<title>รายชื่อนักศึกษา</title>
 <div class="list_name">
-    <h4 style="text-align: center;color: blue;" class="text-2xl font-bold mb-4">รายชื่อนักศึกษา</h4>
-    <div class="overflow-x-auto">
-      <table class="w-full border-collapse bg-white text-sm">
-        <thead>
-          <tr class="bg-gray-100">
-            <th class="p-1 border">รหัสนักศึกษา</th>
-            <th class="p-1 border">ชื่อ-สกุล</th>
-            <th class="p-1 border">อีเมล</th>
-            <th class="p-1 border">ชั่วโมงการอบรม</th>
-            <th class="p-1 border">สถานะคำขอลงสหกิจ</th>
-            <th class="p-1 border">สถานะเอกสารหลังจบสหกิจ</th>
-            <th class="p-1 border">ลบรายชื่อ</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in user_data %}
-            <tr class="hover:bg-gray-50">
-              <td class="p-1 border">{{ item.user.student_id }}</td>
-              <td class="p-1 border">{{ item.user.first_name }} {{ item.user.last_name }}</td>
-              <td class="p-1 border">{{ item.user.email }}</td>
+  <h4 style="text-align: center;color: rgb(61, 61, 187);" class="text-2xl font-bold mb-4">รายชื่อนักศึกษา</h4>
+  <div class="overflow-x-auto">
+    <table class="w-full border-collapse bg-white text-sm">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-1 border">รหัสนักศึกษา</th>
+          <th class="p-1 border">ชื่อ-สกุล</th>
+          <th class="p-1 border">อีเมล</th>
+          <th class="p-1 border">ชั่วโมงการอบรม</th>
+          <th class="p-1 border">สถานะคำขอลงสหกิจ</th>
+          <th class="p-1 border">สถานะเอกสารหลังจบสหกิจ</th>
+          <th class="p-1 border">ลบรายชื่อ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in user_data %}
+        <tr class="hover:bg-gray-50">
+          <td class="p-1 border">{{ item.user.student_id }}</td>
+          <td class="p-1 border">{{ item.user.first_name }} {{ item.user.last_name }}</td>
+          <td class="p-1 border">{{ item.user.email }}</td>
 
-              <!-- ชั่วโมงการอบรม -->
-              <td class="p-1 border
+          <!-- ชั่วโมงการอบรม -->
+          <td class="p-1 border
                 {% if item.total_approved_score == 0 %}
                   text-red-500
                 {% elif item.total_approved_score < 30 %}
@@ -33,61 +34,61 @@
                   text-green-500
                 {% endif %}
               ">
-                {{ item.total_approved_score }}
-              </td>
+            {{ item.total_approved_score }}
+          </td>
 
-              <!-- สถานะคำขอลงสหกิจ -->
-              <td class="p-1 border">
-                {% for form in item.form1 %}
-                  <span
-                    class="{% if form.status2 == 'approved' %} text-green-500
+          <!-- สถานะคำขอลงสหกิจ -->
+          <td class="p-1 border">
+            {% for form in item.form1 %}
+            <span class="{% if form.status2 == 'approved' %} text-green-500
                           {% elif form.status2 == 'pending' %} text-yellow-500
                           {% else %} text-red-500
-                    {% endif %}"
-                  >
-                    {% if form.status2 == 'approved' %} ผ่าน
-                    {% elif form.status2 == 'pending' %} รอดำเนินการ
-                    {% else %} ไม่ผ่าน
-                    {% endif %}
-                  </span>
-                {% empty %}
-                  ไม่มีข้อมูล
-                {% endfor %}
-              </td>
+                    {% endif %}">
+              {% if form.status2 == 'approved' %} ผ่าน
+              {% elif form.status2 == 'pending' %} รอดำเนินการ
+              {% else %} ไม่ผ่าน
+              {% endif %}
+            </span>
+            {% empty %}
+            ไม่มีข้อมูล
+            {% endfor %}
+          </td>
 
-              <!-- สถานะเอกสารหลังจบสหกิจ -->
-              <td class="p-1 border">
-                {% for form in item.form2 %}
-                  <span
-                    class="{% if form.status3 == 'approved' %} text-green-500
+          <!-- สถานะเอกสารหลังจบสหกิจ -->
+          <td class="p-1 border">
+            {% for form in item.form2 %}
+            <span class="{% if form.status3 == 'approved' %} text-green-500
                           {% elif form.status3 == 'pending' %} text-yellow-500
                           {% else %} text-red-500
-                    {% endif %}"
-                  >
-                    {% if form.status3 == 'approved' %} ผ่าน
-                    {% elif form.status3 == 'pending' %} รอดำเนินการ
-                    {% else %} ไม่ผ่าน
-                    {% endif %}
-                  </span>
-                {% empty %}
-                  ไม่มีข้อมูล
-                {% endfor %}
-              </td>
-              <!-- ปุ่มสำหรับลบบัญชีผู้ใช้ -->
-              <td class="p-1 border" style="text-align: center;">
-                <form method="post" action="{% url 'delete_name' item.user.pk %}">
-                  {% csrf_token %}
-                  <button type="submit"  class="bg-red-500 text-white py-1 px-2 rounded">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" >
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m5 0V4a1 1 0 011-1h4a1 1 0 011 1v2m3 0l1 1M5 6l1 1" />
-                    </svg>
-                  </button>
-                </form>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+                    {% endif %}">
+              {% if form.status3 == 'approved' %} ผ่าน
+              {% elif form.status3 == 'pending' %} รอดำเนินการ
+              {% else %} ไม่ผ่าน
+              {% endif %}
+            </span>
+            {% empty %}
+            ไม่มีข้อมูล
+            {% endfor %}
+          </td>
+          <!-- ปุ่มสำหรับลบบัญชีผู้ใช้ -->
+          <td  class="p-1 border" style="text-align: center;">
+            <form method="post" action="{% url 'delete_name' item.user.pk %}">
+              {% csrf_token %}
+              <button  type="submit" class="bg-red-500 text-white py-1 px-2 rounded"
+                onclick="return confirm('คุณต้องการลบผู้ใช้นี้หรือไม่?');">
+                <svg  xmlns="http://www.w3.org/2000/svg" class="w-2 h-2" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                    d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m5 0V4a1 1 0 011-1h4a1 1 0 011 1v2m3 0l1 1M5 6l1 1" />
+                </svg>
+              </button>
+            </form>
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
+</div>
 {% endblock %}

@@ -46,6 +46,7 @@ def list_name(request):
 def delete_name(request, id):
     x = get_object_or_404( CustomUser, pk=id)
     x.delete()
+    messages.error(request,'ลบผู้ใช้แล้ว')
     return redirect('list_name')
 
 @login_required
@@ -60,6 +61,7 @@ def publish(request):
             record = form.save(commit=False)
             record.user = request.user 
             record.save()
+            messages.success(request,"ประกาศข่าวสารแล้ว")
             return redirect('teacher_home')  
     else:
         form = PublishForm()
@@ -70,6 +72,7 @@ def delete_publish(request, id):
     post = get_object_or_404(Publish, pk=id)
     if post.user == request.user:  
         post.delete()
+        messages.error(request,'ประกาศถูกลบแล้ว')
     return redirect('teacher_home')
 
 
@@ -94,7 +97,8 @@ def change_status(request, record_id):
     if request.method == 'POST':
         record.status = 'approved' 
 
-        record.save(update_fields=['status'])       
+        record.save(update_fields=['status'])  
+        messages.success(request,"อนุมัติคำขอแล้ว")     
     return redirect('reqrest_record')
 
 @login_required
@@ -111,6 +115,7 @@ def change_status2(request, id):
         if new_status in ['approved', 'rejected']:  # ตรวจสอบว่าค่าเป็นหนึ่งในตัวเลือกที่อนุญาต
             form.status2 = new_status
             form.save(update_fields=['status2'])
+            messages.success(request,"อนุมัติคำขอแล้ว")  
 
     return redirect('reqrest_form') 
 @login_required
@@ -128,6 +133,7 @@ def change_status3(request, id):
         if new_status in ['approved', 'rejected']:
             form.status3 = new_status
             form.save(update_fields=['status3'])
+            messages.success(request,"อนุมัติคำขอแล้ว")  
 
     return redirect('after') 
 
@@ -167,17 +173,20 @@ def after(request):
 def delete_record(request, id):
     coop = get_object_or_404(Record, pk=id)
     coop.delete()
-    return redirect('reqrest_form')
+    messages.error(request,"ลบคำขอเสร็จสิ้น")
+    return redirect('reqrest_record')
 
 @login_required
 def delete_form(req,id):
     i = get_object_or_404(Createform,pk=id)
     i.delete()
+    messages.error(req,"ลบคำขอเสร็จสิ้น")
     return redirect('reqrest_form')
 @login_required
 def delete_after(req,id):
     i = get_object_or_404(AfterCompleted,pk=id)
     i.delete()
+    messages.error(req,"ลบคำขอเสร็จสิ้น")
     return redirect('after')
 
 
@@ -194,7 +203,7 @@ def create_staff(request):
             user = form.save(commit=False)
             user.role = 'staff'
             user.save()
-            messages.success(request, 'บัญชีผู้ใช้ staff ถูกสร้างเรียบร้อยแล้ว')
+            messages.success(request, 'บัญชีผู้ใช้พี่เลี้ยง ถูกสร้างเรียบร้อยแล้ว')
             # Teacher สร้างเสร็จแล้ว redirect ไปที่หน้า home ของ teacher
             return redirect('teacher_home')
     else:
@@ -211,4 +220,5 @@ def view_evaluations(request):
 def delete_evaluations(request, id):
     x = get_object_or_404(Evaluation, pk=id)
     x.delete()
+    messages.error(request,"ลบผลการประเมินแล้ว")
     return redirect('evaluations')

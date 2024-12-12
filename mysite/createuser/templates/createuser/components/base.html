@@ -102,6 +102,24 @@
    <span > <p>ผู้ใช้งาน:  {{ user.email }}  </p></span>
  </div>
  {% endif %}
+ 
+ {% if messages %}
+  <div style="margin-top: 27px;">
+    {% for message in messages %}
+      {% if message.tags == 'success' %}
+        <div class="alert alert-success" role="alert">
+          {{ message }}
+        </div>
+      {% elif message.tags == 'error' %}
+        <div class="alert alert-danger" role="alert">
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+    {% endif %}
+  </div>
+ 
+ 
       {% block content %}
       <!-- เนื้อหาจะถูกเพิ่มที่นี่ -->
       {% endblock %}

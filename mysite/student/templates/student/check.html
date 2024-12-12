@@ -9,7 +9,7 @@
 
         <!-- ตารางข้อมูล -->
         <div class="overflow-x-auto"> <!-- เพื่อให้ตารางเลื่อนได้ถ้าใหญ่เกิน -->
-            <div style="background-color: rgb(114, 196, 190);"><h2 class="text-lg text-gray-600 mt-8 mb-4" style="color: white;">สถานะเอกการบันทึกชั่วโมงอบรม</h2></div>
+            <div style="background-color: rgb(114, 196, 190);"><h2 class="text-lg text-gray-600 mt-8 mb-4" style="color: white;margin-left: 15px;">สถานะเอกการบันทึกชั่วโมงอบรม</h2></div>
             <table class="min-w-full divide-y divide-gray-200"> <!-- แบ่งเส้น -->
                 <thead class="bg-gray-50"> <!-- สีพื้นหลัง -->
                     <tr>
@@ -39,8 +39,8 @@
         <p class="mt-6">รวม {{ total_credit_hours }} ชั่วโมง</p>
 
         <!-- ตารางข้อมูลสหกิจ -->
-        <h2 class="text-lg text-gray-600 mt-8 mb-4">สถานะเอกสารขอลงสหกิจ</h2>
-        <div class="overflow-x-auto"> <!-- เพื่อให้ตารางเลื่อนได้ถ้าใหญ่เกิน -->
+        <div style="background-color: rgb(114, 196, 190);"><h2 class="text-lg text-gray-600 mt-8 mb-4" style="background-color: rgb(114, 196, 190);margin-left: 15px;" >สถานะเอกสารขอลงสหกิจ</h2></div>    
+    <div class="overflow-x-auto"> <!-- เพื่อให้ตารางเลื่อนได้ถ้าใหญ่เกิน -->
             <table class="min-w-full divide-y divide-gray-200"> <!-- แบ่งเส้น -->
                 <thead class="bg-gray-50"> <!-- สีพื้นหลัง -->
                     <tr>
@@ -57,7 +57,7 @@
                         <td class="px-4 py-2">{{ forloop.counter }}</td>
                         <td class="px-4 py-2">{{ record.user.first_name}} {{ record.user.last_name }}</td>
                         <td class="px-4 py-2">{{ record.date2 }}</td>
-                        <td class="px-4 py-2"><a href="{{ record.certificate2.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td>
+                        <td class="px-4 py-2"><a href="{{ record.certificate1.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td>
                         <td class="px-4 py-2">{{ record.status2 }}</td>
                     </tr>
                     {% endfor %}
@@ -66,7 +66,7 @@
         </div>
 
         <!-- ตารางข้อมูลสหกิจ -->
-        <h2 class="text-lg text-gray-600 mt-8 mb-4">สถานะเอกสารหลังจบสหกิจ</h2>
+        <div style="background-color: rgb(114, 196, 190);"><h2 class="text-lg text-gray-600 mt-8 mb-4" style="background-color: rgb(114, 196, 190);margin-left: 15px;" >สถานะเอกสารหลังจบสหกิจ</h2></div> 
         <div class="overflow-x-auto"> <!-- เพื่อให้ตารางเลื่อนได้ถ้าใหญ่เกิน -->
             <table class="min-w-full divide-y divide-gray-200"> <!-- แบ่งเส้น -->
                 <thead class="bg-gray-50"> <!-- สีพื้นหลัง -->
@@ -82,9 +82,9 @@
                     {% for i in form2 %}
                     <tr>
                         <td class="px-4 py-2">{{ forloop.counter }}</td>
-                        <td class="px-4 py-2">{{ record.user.first_name}} {{ record.user.last_name }}</td>
+                        <td class="px-4 py-2">{{ i.user.first_name}} {{ i.user.last_name }}</td>
                         <td class="px-4 py-2">{{ i.date3 }}</td>
-                        <td class="px-4 py-2"><a href="{{ record.certificate3.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td>
+                        <td class="px-4 py-2"><a href="{{ i.certificate2.url }}" target="_blank" class="text-blue-500 hover:text-blue-700">ดูเอกสาร </a></td>
                         <td class="px-4 py-2">{{ i.status3 }}</td>
                     </tr>
                     {% endfor %}

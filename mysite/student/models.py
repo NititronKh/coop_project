@@ -29,7 +29,7 @@ class Record(models.Model):
 class Createform(models.Model):
     user = models.ForeignKey(user_model, on_delete=models.CASCADE, verbose_name='ผู้ใช้')
     date2 = models.DateField(verbose_name='วันที่', default=timezone.now)
-    certificate2 = models.FileField(upload_to='certificates2/', verbose_name='อัพโหลดเอกสาร', default=None)
+    certificate1 = models.FileField(upload_to='certificate1/', verbose_name='อัพโหลดเอกสาร', default=None)
 
     STATUS_CHOICES = (
         ('pending', 'รอการอนุมัติ'),
@@ -43,7 +43,7 @@ class Createform(models.Model):
 class AfterCompleted(models.Model):
     user = models.ForeignKey(user_model, on_delete=models.CASCADE, verbose_name='ผู้ใช้')
     date3 = models.DateField(verbose_name='วันที่', default=timezone.now)
-    certificate3 = models.FileField(upload_to='certificates2/', verbose_name='อัพโหลดเอกสาร', default=None)
+    certificate2 = models.FileField(upload_to='certificate2/', verbose_name='อัพโหลดเอกสาร', default=None)
 
     STATUS_CHOICES = (
         ('pending', 'รอการอนุมัติ'),
