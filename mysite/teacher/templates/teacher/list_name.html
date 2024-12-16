@@ -1,9 +1,25 @@
 {% extends 'teacher/components/base.html' %}
 
 {% block content %}
-<title>รายชื่อนักศึกษา</title>
 <div class="list_name">
-  <h4 style="text-align: center;color: rgb(61, 61, 187);" class="text-2xl font-bold mb-4">รายชื่อนักศึกษา</h4>
+  <h4 style="text-align: center; color: rgb(61, 61, 187);" class="text-2xl font-bold mb-4">รายชื่อนักศึกษา</h4>
+  <div class="flex justify-between items-center mb-2" >
+    <!-- ดรอปดาวน์กรอกสถานะ -->
+    <div style="margin-left: 90%">
+      <form method="post" style="display: inline;">
+          {% csrf_token %}
+          <select id="statusFilter" name="status_filter" class="border rounded p-2" onchange="this.form.submit()">
+            <option style="color: #007bff; background-color: #f0f8ff; border: 1px solid #007bff;" value="" {% if selected_status == "" %}selected{% endif %}>ทั้งหมด</option>
+            <option style="color: #28a745; background-color: #d4edda; border: 1px solid #28a745;" value="approved" {% if selected_status == "approved" %}selected{% endif %}>ผ่าน</option>
+            <option style="color: #ffc107; background-color: #fff3cd; border: 1px solid #ffc107;" value="pending" {% if selected_status == "pending" %}selected{% endif %}>รอดำเนินการ</option>
+            <option style="color: #dc3545; background-color: #f8d7da; border: 1px solid #dc3545;" value="no_data" {% if selected_status == "no_data" %}selected{% endif %}>ไม่มีข้อมูล</option>
+        </select>
+      </form>
+    </div>
+    
+    
+  
+  </div>
   <div class="overflow-x-auto">
     <table class="w-full border-collapse bg-white text-sm">
       <thead>
@@ -23,21 +39,16 @@
           <td class="p-1 border">{{ item.user.student_id }}</td>
           <td class="p-1 border">{{ item.user.first_name }} {{ item.user.last_name }}</td>
           <td class="p-1 border">{{ item.user.email }}</td>
-
-          <!-- ชั่วโมงการอบรม -->
-          <td class="p-1 border
+          <td class="p-1 border 
                 {% if item.total_approved_score == 0 %}
                   text-red-500
                 {% elif item.total_approved_score < 30 %}
                   text-yellow-500
                 {% else %}
                   text-green-500
-                {% endif %}
-              ">
+                {% endif %}">
             {{ item.total_approved_score }}
           </td>
-
-          <!-- สถานะคำขอลงสหกิจ -->
           <td class="p-1 border">
             {% for form in item.form1 %}
             <span class="{% if form.status2 == 'approved' %} text-green-500
@@ -50,11 +61,9 @@
               {% endif %}
             </span>
             {% empty %}
-            ไม่มีข้อมูล
+            <p style="text-align: right;">-</p>
             {% endfor %}
           </td>
-
-          <!-- สถานะเอกสารหลังจบสหกิจ -->
           <td class="p-1 border">
             {% for form in item.form2 %}
             <span class="{% if form.status3 == 'approved' %} text-green-500
@@ -70,13 +79,12 @@
             ไม่มีข้อมูล
             {% endfor %}
           </td>
-          <!-- ปุ่มสำหรับลบบัญชีผู้ใช้ -->
-          <td  class="p-1 border" style="text-align: center;">
+          <td class="p-1 border" style="text-align: center;">
             <form method="post" action="{% url 'delete_name' item.user.pk %}">
               {% csrf_token %}
-              <button  type="submit" class="bg-red-500 text-white py-1 px-2 rounded"
+              <button type="submit" class="bg-red-500 text-white py-1 px-2 rounded"
                 onclick="return confirm('คุณต้องการลบผู้ใช้นี้หรือไม่?');">
-                <svg  xmlns="http://www.w3.org/2000/svg" class="w-2 h-2" viewBox="0 0 24 24" fill="none"
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-2 h-2" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
                     d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m5 0V4a1 1 0 011-1h4a1 1 0 011 1v2m3 0l1 1M5 6l1 1" />
@@ -84,11 +92,11 @@
               </button>
             </form>
           </td>
-
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
+
 {% endblock %}

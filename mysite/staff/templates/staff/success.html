@@ -5,7 +5,12 @@
   
   <div class="mt-4 text-center">
     <p class="text-gray-700">คุณได้ส่งแบบประเมินแล้ว</p>
-    <a href="{% url 'staff_home' %}" class="text-blue-600 hover:underline mt-4 block">Back to Home</a>
+    <form action="{% url 'staff_home' %}" >
+      <button type="submit" style="border: 2px solid green; padding: 3px; background-color: rgb(223, 205, 205); cursor: pointer;margin: 15px;border-radius: 15px;">
+        <i class="fas fa-check-circle" style="color: green;"> เสร็จสิ้น </i>
+      </button>
+    </form>
+    
   </div>
 </div>
 {% endblock %}

@@ -26,6 +26,7 @@ def record(request):
             record = form.save(commit=False)
             record.user = request.user  
             record.save()
+            messages.success(request,"บันทึกเอกสารเรียบร้อย")
             return redirect('check')  
     else:
         form = RecordForm()
@@ -60,6 +61,7 @@ def createform(req):
             new_form = form.save(commit=False)
             new_form.user = req.user  
             new_form.save() 
+            messages.success(req,"บันทึกเอกสารเรียบร้อย")
             return redirect('check')
     else:
         if user_form:  
@@ -84,6 +86,7 @@ def after_completed(req):
             new_form = form.save(commit=False)
             new_form.user = req.user  
             new_form.save() 
+            messages.success(req,"บันทึกเอกสารเรียบร้อย")
             return redirect('check')
     else:
         if user_form:  
@@ -98,6 +101,7 @@ def delete_form(req):
     user_form = get_object_or_404(Createform, user=req.user)
     if req.method == "POST":  # ลบเมื่อได้รับ POST
         user_form.delete()
+        messages.error(req,"ลบเอกสารแล้ว")
         return redirect('student_home')
     return render(req, 'student/delete.html', {"form": user_form})
 

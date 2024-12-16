@@ -20,27 +20,53 @@ def teacher_homehome(req):
     publishes = Publish.objects.all()
     return render(req, 'teacher/teacher_home.html', {'publishes': publishes})
 
-
 @login_required
 def list_name(request):
     if request.user.role != CustomUser.TEACHER:
         messages.error(request, 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้')
         request.session.flush()  # เคลียร์เซสชัน
-        return redirect('login')  
+        return redirect('login')
+
+    # ดึงค่าตัวกรองสถานะจาก POST
+    status_filter = request.POST.get("status_filter")
+
     students = CustomUser.objects.filter(role='student').prefetch_related('createform_set')
     student_data = []
+
     for student in students:
+        # คำนวณคะแนนที่ได้รับการอนุมัติ
         approved_records = Record.objects.filter(user=student, status='approved')
         total_approved_score = approved_records.aggregate(Sum('score'))['score__sum'] or 0
+
+        # ดึงฟอร์ม AfterCompleted (form2)
         form1 = Createform.objects.filter(user=student)
         form2 = AfterCompleted.objects.filter(user=student)
-        student_data.append({
-            'user': student,
-            'total_approved_score': total_approved_score,
-            'form1': form1,
-            'form2': form2,
-        })
-    return render(request, 'teacher/list_name.html', {'user_data': student_data})
+
+        # กรองข้อมูลตามตัวกรองสถานะ
+        if status_filter == "approved":
+            form2 = form2.filter(status3='approved')
+        elif status_filter == "pending":
+            form2 = form2.filter(status3='pending')
+        elif status_filter == "no_data":
+            # กรณีไม่มีข้อมูลใน form2
+            form2 = form2.none()
+        elif status_filter:  # ถ้ามีสถานะอื่นที่ไม่รองรับ
+            form2 = form2.none()
+
+        # ตรวจสอบว่า form2 มีข้อมูลตรงตามเงื่อนไข หรือเป็นกรณี "ไม่มีข้อมูล"
+        if form2.exists() or (status_filter == "no_data" and not AfterCompleted.objects.filter(user=student).exists()) or not status_filter:
+            student_data.append({
+                'user': student,
+                'total_approved_score': total_approved_score,
+                'form1': form1,
+                'form2': form2,
+            })
+
+    return render(request, 'teacher/list_name.html', {
+        'user_data': student_data,
+        'selected_status': status_filter
+    })
+
 
 @login_required
 def delete_name(request, id):

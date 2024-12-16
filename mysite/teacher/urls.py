@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 urlpatterns =[
     path('teacher_home/',views.teacher_homehome,name='teacher_home'),
     path('list_name/',views.list_name,name='list_name'),
+
     path("delete/<int:id>",views.delete_name ,name='delete_name'),
     path('reqrest_record/',views.reqrest_record,name='reqrest_record'),
     path('reqrest_form',views.reqrest_form,name='reqrest_form'),
