@@ -51,24 +51,37 @@ def createform(req):
         messages.error(req, 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้')
         req.session.flush()  
         return redirect('login')
+    
     user_form = Createform.objects.filter(user=req.user).first()
+    
     if req.method == "POST":
         if user_form: 
             form = CreateformForm(req.POST, req.FILES, instance=user_form) 
         else:
             form = CreateformForm(req.POST, req.FILES)  
+        
         if form.is_valid():  
             new_form = form.save(commit=False)
             new_form.user = req.user  
+
+            # อัปเดตสถานะเป็น 'pending' หรือค่า default
+            if new_form.status2 == "approved":
+                new_form.status2 = "pending"  # หรือค่าที่คุณต้องการเป็น default
+
             new_form.save() 
-            messages.success(req,"บันทึกเอกสารเรียบร้อย")
+            messages.success(req, "บันทึกเอกสารเรียบร้อย")
             return redirect('check')
     else:
         if user_form:  
             form = CreateformForm(instance=user_form)
+            # อัปเดตสถานะเป็น 'pending' หรือค่า default
+            user_form.status2 = "pending"  # หรือค่าที่คุณต้องการเป็น default
+            user_form.save()
         else:  
             form = CreateformForm()
+
     return render(req, 'student/createform.html', {"form": form})
+
 
 @login_required  
 def after_completed(req):
@@ -76,24 +89,37 @@ def after_completed(req):
         messages.error(req, 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้')
         req.session.flush()  
         return redirect('login')
+    
     user_form = AfterCompleted.objects.filter(user=req.user).first()
+    
     if req.method == "POST":
         if user_form: 
             form = AfterCompleteform(req.POST, req.FILES, instance=user_form) 
         else:
             form = AfterCompleteform(req.POST, req.FILES)  
+        
         if form.is_valid():  
             new_form = form.save(commit=False)
             new_form.user = req.user  
+
+            # อัปเดตสถานะเป็น 'pending' หรือค่า default
+            if new_form.status3 == "approved":
+                new_form.status3 = "pending"  # หรือค่าที่คุณต้องการเป็น default
+
             new_form.save() 
-            messages.success(req,"บันทึกเอกสารเรียบร้อย")
+            messages.success(req, "บันทึกเอกสารเรียบร้อย")
             return redirect('check')
     else:
         if user_form:  
             afterform = AfterCompleteform(instance=user_form)
+            # อัปเดตสถานะเป็น 'pending' หรือค่า default
+            user_form.status3 = "pending"  # หรือค่าที่คุณต้องการเป็น default
+            user_form.save()
         else:  
             afterform = AfterCompleteform()
+
     return render(req, 'student/after_completed.html', {"afterform": afterform})
+
 
 @login_required
 def delete_form(req):
