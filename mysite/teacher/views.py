@@ -199,7 +199,7 @@ def after(request):
 def delete_record(request, id):
     coop = get_object_or_404(Record, pk=id)
     coop.delete()
-    messages.error(request,"ลบคำขอเสร็จสิ้น")
+    messages.success(request,"ลบคำขอเสร็จสิ้น")
     return redirect('reqrest_record')
 
 @login_required

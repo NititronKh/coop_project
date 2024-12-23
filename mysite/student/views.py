@@ -32,6 +32,21 @@ def record(request):
         form = RecordForm()
     return render(request, 'student/record.html', {'form': form})
 
+def delStudentRecord(req, id):
+    # ดึงข้อมูล Record โดยใช้ ID
+    post = get_object_or_404(Record, pk=id)
+
+    # ตรวจสอบว่าผู้ใช้เป็นเจ้าของข้อมูล
+    if post.user == req.user:
+        if post.status == 'approved':  # ตรวจสอบสถานะของ post
+            messages.error(req, "ไม่สามารถลบคำขอได้ เนื่องจากเอกสารได้รับการพิจารณาอนุมัติแล้ว")
+        else:
+            post.delete()  # ลบข้อมูลหากสถานะไม่ใช่ approved
+            messages.success(req, "ลบคำขอบันชั่วโมงการอบรมสำเร็จ")
+    else:
+        messages.error(req, "คุณไม่มีสิทธิ์ลบข้อมูลนี้")
+    return redirect('check')
+
 @login_required
 def check(request):
     if request.user.role != CustomUser.STUDENT:

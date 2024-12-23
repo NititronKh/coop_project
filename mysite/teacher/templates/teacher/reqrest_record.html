@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mx-auto p-4">
-  <h2 class="text-2xl font-bold mb-4" style="color: blue;">รายการสหกิจศึกษา</h2>
+  <h2 class="text-2xl font-bold mb-4" style="color:rgb(61, 61, 187);font-family: 'JS Wansika Italic';">คำขอบันทึกหน่วยกิตนักศึกษา</h2>
 
   <!-- เพิ่ม overflow-x-auto เพื่อให้ตารางสามารถเลื่อนได้ถ้ามันกว้างเกินไป -->
   <div class="overflow-x-auto">
@@ -23,8 +23,11 @@
             <td class="p-2 border">{{ coop.user.first_name }}</td>
             <td class="p-2 border">{{ coop.title }}</td>
             <td class="p-2 border">
-              <a href="{{ coop.certificate.url }}" target="_blank" class="text-blue-500 hover:underline">ดูเอกสาร</a>
+              <a href="{{ coop.certificate.url }}" target="_blank" class="text-blue-500 hover:underline">
+                <i class="fas fa-file-pdf" style="color: red;"></i>
+              </a>
             </td>
+            
             <td class="p-2 border">{{ coop.score }}</td>
 
             <!-- สีตามสถานะ -->
@@ -60,7 +63,7 @@
                   <form method="post" action="{% url 'change_status' coop.pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="status" value="approved">
-                    <button type="submit" class="bg-green-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
+                    <button type="submit" class="bg-blue-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
                       style="min-width: 80px; height: 35px;"
                       onclick="return confirm('อนุมัติคำขอหรือไม่?');">
                       อนุมัติ

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mx-auto p-4">
-  <h2 class="text-2xl font-bold mb-4" style="color: blue;">ตรวจสอบเอกสาร</h2>
+  <h2 class="text-2xl font-bold mb-4" style="color:rgb(61, 61, 187);font-family: 'JS Wansika Italic';">รายการคำขอส่งเอกสารก่อนลงสหกิจนักศึกษา</h2>
   <div class="overflow-x-auto">
     <table class="w-full bg-white border-collapse">
       <thead>
@@ -25,7 +25,7 @@
               <td class="p-2 border">{{ form.date2 }}</td>
               <td class="p-2 border">
                 <a href="{{ form.certificate2.url }}" target="_blank" class="text-blue-500 hover:underline">
-                  ดูเอกสาร
+                  <i class="fas fa-file-pdf" style="color: red;"></i>
                 </a>
               </td>
               <td class="p-2 border">{{ form.status2 }}</td>
@@ -57,7 +57,7 @@
                   <form method="post" action="{% url 'change_status2' form.pk %}" style="text-align: center;">
                     {% csrf_token %}
                     <input type="hidden" name="status" value="approved">
-                    <button  type="submit" class="bg-green-500 text-white rounded px-2 py-1 flex items-center justify-center"
+                    <button  type="submit" class="bg-blue-500 text-white rounded px-2 py-1 flex items-center justify-center"
                       onclick="return confirm('อนุมัติคำขอหรือไม่?');">
                       <!-- ไอคอน SVG -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-2 h-2 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">

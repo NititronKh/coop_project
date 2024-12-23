@@ -1,7 +1,10 @@
+
 {% extends 'teacher/components/base.html' %}
+{% load widget_tweaks %}
+
 {% block content %}
 <div class="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6" style="background-color: rgb(219, 221, 221);">
-  <h2 class="text-2xl font-bold text-gray-800 mb-4" style="color: blue;">สร้างการประชาสัมธ์</h2>
+  <h2 class="text-2xl font-bold text-gray-800 mb-4" style="color: rgb(61, 61, 187);font-family: 'JS Wansika Italic';">สร้างการประชาสัมธ์</h2>
   
   <form method="post" enctype="multipart/form-data" action="{% url 'publish' %}">
     {% csrf_token %}
@@ -9,10 +12,11 @@
       <!-- ส่วนกรอกข้อมูล -->
       {% for field in form %}
         <div class="form-group">
-          {{ field.label_tag }}
+          <label for="{{ field.id_for_label }}" class="text-sm font-semibold text-gray-700">{{ field.label }}</label>
           {{ field.errors }}
-          <div class="mt-1" style="color: black;">
-            {{ field }}
+          <div class="mt-1">
+            <!-- เพิ่มคลาสให้กับช่องกรอกข้อมูล -->
+            {{ field|add_class:"form-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" }}
           </div>
           <!-- แสดงข้อความช่วยเหลือ -->
           <div class="text-sm text-gray-500">{{ field.help_text }}</div>  <!-- ข้อความช่วย -->
@@ -21,12 +25,10 @@
     </div>
     
     <div class="mt-6 text-center">
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">เผยแพร่</button>
+      <!-- เพิ่มคลาสให้กับปุ่ม -->
+      <button type="submit" class="bg-blue-600 text-white px-7 py-1 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 transition">บันทึก</button>
     </div>
   </form>
   
-  <div class="mt-4 text-center">
-    <a href="{% url 'teacher_home' %}" class="text-blue-600 hover:underline">กลับหน้าหลัก</a>
-  </div>
 </div>
 {% endblock %}

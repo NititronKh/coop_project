@@ -1,127 +1,156 @@
 {% load static %}
+{% load widget_tweaks %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- นำเข้า Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- นำเข้า FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script>
-        // ฟังก์ชันสำหรับการพับเมนู
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("w-64");
-            sidebar.classList.toggle("w-14");
-            const textElements = document.querySelectorAll(".menu-text");
-            textElements.forEach(element => {
-                element.classList.toggle("hidden");
-            });
-        }
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- นำเข้า Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- นำเข้า FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&family=Kanit:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script>
+    // ฟังก์ชันสำหรับการพับเมนู
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("w-64");
+      sidebar.classList.toggle("w-14");
+      const textElements = document.querySelectorAll(".menu-text");
+      textElements.forEach(element => {
+        element.classList.toggle("hidden");
+      });
+    }
+  </script>
+  <style>
+    /* ใช้ @font-face เพื่อโหลดฟอนต์ JS Wansika Italic */
+    @font-face {
+      font-family: 'JS Wansika Italic';
+      src: url('{% static "teacher/fonts/JS Wansika Italic.ttf" %}') format('truetype');
+    }
+
+
+    body {
+      font-family: 'JS Wansika Italic', sans-serif;
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JS+Wansika+Italic&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
 <body class="flex min-h-screen bg-gray-100"> <!-- ใช้ min-h-screen เพื่อให้แน่ใจว่ามีความสูงขั้นต่ำ -->
-  
+
   <!-- Sidebar -->
-  <div id="sidebar" class="w-64 bg-gray-700 text-white flex flex-col transition-all duration-300 sticky top-0 h-screen" > <!-- ใช้ h-screen เพื่อให้แน่ใจว่าครอบคลุมความสูงทั้งหมด -->
+  <div id="sidebar" class="w-64 bg-gray-700 text-white flex flex-col transition-all duration-300 sticky top-0 h-screen">
+    <!-- ใช้ h-screen เพื่อให้แน่ใจว่าครอบคลุมความสูงทั้งหมด -->
     <!-- ปุ่มพับ -->
-    <button onclick="toggleSidebar()" class="self-end text-white bg-gray-600 p-2 rounded hover:bg-gray-500 transition" style="margin-right: 12px; margin-top: 12px;">
+    <button onclick="toggleSidebar()" class="self-end text-white bg-gray-600 p-2 rounded hover:bg-gray-500 transition"
+      style="margin-right: 12px; margin-top: 12px;">
       <i class="fas fa-bars" style="font-size: 20px;"></i>
     </button>
 
     <ul class="mt-4 space-y-3 flex-1" style="margin-top: 1px;">
       <li>
         <a href="{% url 'teacher_home' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-home" style="font-size: 25px;"></i>
+          <i class="fas fa-home" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">หน้าหลัก</span>
         </a>
       </li>
       <li>
         <a href="{% url 'list_name' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-list"style="font-size: 25px;"></i> <!-- แก้ไขไอคอน -->
+          <i class="fas fa-list" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">ทะเบียนรายชื่อ</span>
         </a>
       </li>
       <li>
         <a href="{% url 'publish' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-bullhorn"style="font-size: 25px;"></i> <!-- ไอคอนประชาสัมพันธ์ -->
+          <i class="fas fa-bullhorn" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">ประชาสัมพันธ์</span>
         </a>
       </li>
       <li>
         <a href="{% url 'reqrest_form' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-file-alt"style="font-size: 25px;"></i> <!-- ไอคอนแบบฟอร์ม -->
+          <i class="fas fa-file-alt" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">คำขอลงสหกิจ</span>
         </a>
       </li>
       <li>
         <a href="{% url 'reqrest_record' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-clipboard-list"style="font-size: 25px;"></i> <!-- ไอคอนบันทึกหน่วยกิต -->
+          <i class="fas fa-clipboard-list" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">คำขอบันทึกหน่วยกิต</span>
         </a>
       </li>
       <li>
         <a href="{% url 'after' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-trophy" style="font-size: 25px;"></i>  <!-- ไอคอนบันทึกหน่วยกิต -->
+          <i class="fas fa-trophy" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">เอกสารหลังจบสหกิจ</span>
         </a>
       </li>
       <li>
         <a href="{% url 'create_staff' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-user-plus"style="font-size: 25px;"></i> <!-- ไอคอนสร้างผู้ใช้ -->
+          <i class="fas fa-user-plus" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">สร้างบัญชีพี่เลี้ยง</span>
         </a>
       </li>
       <li>
         <a href="{% url 'evaluations' %}" class="flex items-center hover:bg-gray-600 p-3 rounded transition">
-          <i class="fas fa-chart-line" style="font-size: 25px;"></i> <!-- ใช้ไอคอน "fas fa-chart-line" -->
+          <i class="fas fa-chart-line" style="font-size: 15px;"></i>
           <span class="menu-text ml-3">ผลการประเมิน</span>
         </a>
       </li>
-      
-      
-
-        <form method="post" action="{% url 'logout' %}" class="flex items-center">
-          {% csrf_token %}  <!-- เพิ่ม CSRF token เพื่อความปลอดภัย -->
-          <button type="submit" class="flex items-center hover:bg-gray-600 p-3 rounded transition" style="margin-top: -12px;"
-          onclick="return confirm('คุณต้องการออกจากระบบหรือไม่?');">
-            <i class="fas fa-sign-out-alt" style="font-size: 25px; color: red;"></i>
-            <span style="color: red;" class="menu-text ml-3">ออกจากระบบ</span>
-          </button>
-        </form>
-      </li>
+    
+      <form method="post" action="{% url 'logout' %}" class="flex items-center">
+        {% csrf_token %}
+        <button type="submit" class="flex items-center hover:bg-gray-600 p-3 rounded transition" style="margin-top: -12px;" onclick="return confirm('คุณต้องการออกจากระบบหรือไม่?');">
+          <i class="fas fa-sign-out-alt" style="font-size: 15px; color: red;"></i>
+          <span style="color: red;" class="menu-text ml-3">ออกจากระบบ</span>
+        </button>
+      </form>
     </ul>
+    
+    
   </div>
 
   <!-- Main Content -->
   <div class="flex-1 p-6 overflow-y-auto">
-       <!-- ใช้ overflow-y-auto เพื่อให้เนื้อหาหลักสามารถเลื่อนได้ -->
-       <div style="background-color: white; margin: -2%; padding: 1%; display: flex;border: 2px solid rgb(85, 127, 164);">
-        <img style="height: 80px; width: 250px;margin-right: 10px;" src="{% static 'student/logo-ubu.jpg' %}">
-        <h1 style="text-align: center; font-size: 250%;flex-grow: 1;color: rgb(61, 61, 187);">ระบบติดตามการฝึกสหกิจศึกษา</h1>
-      </div>
-      {% if messages %}
-  <div style="margin-top: 27px;">
-    {% for message in messages %}
+    <!-- ใช้ overflow-y-auto เพื่อให้เนื้อหาหลักสามารถเลื่อนได้ -->
+    <div style="background-color: white; margin: -2%; padding: 1%; display: flex;border: 4px solid rgb(85, 127, 164);">
+      <img style="height: 80px; width: 250px;margin-right: 10px;" src="{% static 'student/logo-ubu.jpg' %}">
+      <h1
+        style="text-align: center; font-size: 65px; flex-grow: 1; color: rgb(61, 61, 187); font-family: 'JS Wansika Italic', sans-serif;">
+        ระบบติดตามการฝึกสหกิจศึกษา UBU
+      </h1>
+
+
+    </div>
+    {% if messages %}
+    <div style="margin-top: 27px;">
+      {% for message in messages %}
       {% if message.tags == 'success' %}
-        <div class="alert alert-success" role="alert" style="margin-bottom: 0;">
-          <span><i class="fas fa-check-circle" style="color: green;"> {{ message }} </i></span>
-        </div>
+      <div class="alert alert-success" role="alert" style="margin-bottom: 0;">
+        <span><i class="fas fa-check-circle" style="color: green;"> {{ message }} </i></span>
+      </div>
       {% elif message.tags == 'error' %}
-        <div class="alert alert-danger" role="alert">
-          <span><i class="fas fa-times-circle" style="color: red;"> {{ message }} </i></span>
-        </div>
+      <div class="alert alert-danger" role="alert">
+        <span><i class="fas fa-times-circle" style="color: red;"> {{ message }} </i></span>
+      </div>
       {% endif %}
-    {% endfor %}
-  </div>
-{% endif %}
-  <p style="font-size: 10px;color: red;margin-top: 25px;">(ระบบนี้เป็นส่วนหนึ่งของโปรเจกต์นักศึกษาของมหาวิทยาลัยอุบลราชธานี ภายใต้การดูแลของอาจารย์ เกรียงศักดิ์ ตรีประพิณ กรุณาติดต่อ kriengsak.t@ubu.ac.th หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม)</p>
-  <h4 style="margin-top: -1px ; color: rgb(61, 61, 187);">ผู้ใช้งาน: {{ user.first_name }}  {{ user.last_name }} </h4>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <p style="font-size: 10px;color: red;margin-top: 25px;">
+      (ระบบนี้เป็นส่วนหนึ่งของโปรเจกต์นักศึกษาของมหาวิทยาลัยอุบลราชธานี ภายใต้การดูแลของอาจารย์ เกรียงศักดิ์ ตรีประพิณ
+      กรุณาติดต่อ kriengsak.t@ubu.ac.th หากมีข้อสงสัยหรือต้องการข้อมูลเพิ่มเติม)</p>
+    <h4 style="margin-top: -1px ; color: rgb(61, 61, 187);font-family: 'JS Wansika Italic'">ผู้ใช้งาน: {{ user.first_name }} {{ user.last_name }} </h4>
     {% block content %}
     <!-- เนื้อหาจะถูกเพิ่มที่นี่ -->
     {% endblock %}
   </div>
 </body>
+
 </html>
