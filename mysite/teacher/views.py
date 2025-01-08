@@ -126,6 +126,19 @@ def change_status(request, record_id):
         record.save(update_fields=['status'])  
         messages.success(request,"อนุมัติคำขอแล้ว")     
     return redirect('reqrest_record')
+@login_required
+def change_status_unapproved(request, record_id):
+    if request.user.role != CustomUser.TEACHER:
+        messages.error(request, 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้')
+        request.session.flush()  # เคลียร์เซสชัน
+        return redirect('login')
+    record = get_object_or_404(Record, pk=record_id)
+    if request.method == 'POST':
+        record.status = 'rejected' 
+
+        record.save(update_fields=['status'])  
+        messages.error(request,"บันทึกไม่อนุมัติ")     
+    return redirect('reqrest_record')
 
 @login_required
 def change_status2(request, id):
@@ -144,24 +157,58 @@ def change_status2(request, id):
             messages.success(request,"อนุมัติคำขอแล้ว")  
 
     return redirect('reqrest_form') 
+
+@login_required
+def change_status_unapproved2(request, create_form):
+    if request.user.role != CustomUser.TEACHER:
+        messages.error(request, 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้')
+        request.session.flush()  # เคลียร์เซสชัน
+        return redirect('login')
+
+    # ดึงข้อมูลของแบบฟอร์มจากฐานข้อมูล
+    form = get_object_or_404(Createform, pk=create_form)
+
+    if request.method == 'POST':
+        form.status2 = 'rejected'  # ตั้งสถานะเป็น 'rejected'
+        form.save(update_fields=['status2'])  # บันทึกการเปลี่ยนแปลง
+        messages.success(request, "บันทึกไม่อนุมัติ")
+
+    return redirect('reqrest_form')
+
 @login_required
 def change_status3(request, id):
     if request.user.role != CustomUser.TEACHER:
         messages.error(request, 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้')
         request.session.flush()  # เคลียร์เซสชัน
         return redirect('login')
-
     form = get_object_or_404(AfterCompleted, pk=id)
 
     if request.method == 'POST':
-        new_status = request.POST.get('status', None)
+        new_status = request.POST.get('status3', None)  # รับค่า 'status' จาก POST
 
-        if new_status in ['approved', 'rejected']:
+        if new_status in ['approved', 'rejected']:  # ตรวจสอบว่าค่าเป็นหนึ่งในตัวเลือกที่อนุญาต
             form.status3 = new_status
             form.save(update_fields=['status3'])
             messages.success(request,"อนุมัติคำขอแล้ว")  
 
-    return redirect('after') 
+    return redirect('after')
+
+@login_required
+def change_status_unapproved3(request, after):  # เปลี่ยนจาก 'id' เป็น 'after'
+    if request.user.role != CustomUser.TEACHER:
+        messages.error(request, 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้')
+        request.session.flush()  # เคลียร์เซสชัน
+        return redirect('login')
+
+    # ดึงข้อมูลของแบบฟอร์มจากฐานข้อมูล
+    form = get_object_or_404(AfterCompleted, pk=after)
+
+    if request.method == 'POST':
+        form.status3 = 'rejected'  # ตั้งสถานะเป็น 'rejected'
+        form.save(update_fields=['status3'])  # บันทึกการเปลี่ยนแปลง
+        messages.success(request, "บันทึกไม่อนุมัติ")
+
+    return redirect('after')
 
 
 @login_required

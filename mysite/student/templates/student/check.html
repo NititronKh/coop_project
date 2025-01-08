@@ -1,6 +1,7 @@
 {% extends 'student/components/base.html' %}
 
 {% block content %}
+
 <div class="flex justify-center items-center min-h-screen bg-gray-100" style="margin-top: 2%; ">
     <!-- Flex เพื่อจัดเลย์เอาต์ -->
     <div class="w-11/12 md:w-3/4 lg:w-2/3 bg-white shadow-lg rounded-lg p-6"> <!-- ขอบตาราง -->
@@ -36,7 +37,17 @@
                         <td class="px-4 py-2"><a href="{{ record.certificate.url }}" target="_blank"
                                 class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td> <!-- ลิงก์สีฟ้า -->
                         <td class="px-4 py-2">{{ record.score }}</td>
-                        <td class="px-4 py-2">{{ record.status }}</td>
+                        <td class="px-4 py-2" style="
+  color: 
+    {% if record.status == 'approved' %} green 
+    {% elif record.status == 'rejected' %} red 
+    {% elif record.status == 'pending' %} rgb(220, 220, 14) 
+    {% else %} black 
+    {% endif %};">
+                            {{ record.status }}
+                        </td>
+
+
                         <td class="px-4 py-2">
                             {% if item.user == req.user %}
                             <!-- เพิ่มเงื่อนไขเช็คว่าโพสต์เป็นของผู้ใช้ปัจจุบันหรือไม่ -->
@@ -57,7 +68,26 @@
             </table>
         </div>
 
-        <p class="mt-6">รวม {{ total_credit_hours }} ชั่วโมง</p>
+        <p id="creditHours" class="mt-6">รวม {{ total_credit_hours }} ชั่วโมง</p>
+
+        <script>
+            // กำหนดค่าของ total_credit_hours
+
+            const totalCreditHours = {{ total_credit_hours }}; // ค่าเปลี่ยนจากเซิร์ฟเวอร์หรือโค้ดฝั่ง Client
+
+            // ดึง element ที่ต้องการเปลี่ยนสี
+            const creditHoursElement = document.getElementById("creditHours");
+
+            // ตรวจสอบเงื่อนไขและเปลี่ยนสี
+            if (totalCreditHours === 0) {
+                creditHoursElement.style.color = "red"; // สีแดง
+            } else if (totalCreditHours >= 1 && totalCreditHours <= 29) {
+                creditHoursElement.style.color = "rgb(220, 220, 14)";
+            } else if (totalCreditHours > 30) {
+                creditHoursElement.style.color = "green"; // สีเขียว
+            }
+        </script>
+
 
         <!-- ตารางข้อมูลสหกิจ -->
         <div style="background-color: rgb(114, 196, 190);">
@@ -75,7 +105,7 @@
                         <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">วันที่</th>
                         <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">เอกสาร</th>
                         <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">สถานะ</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ลบเอกสาร</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">แก้ไขเอกสาร</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200"> <!-- เส้นแบ่งระหว่างแถว -->
@@ -86,7 +116,24 @@
                         <td class="px-4 py-2">{{ record.date2 }}</td>
                         <td class="px-4 py-2"><a href="{{ record.certificate1.url }}" target="_blank"
                                 class="text-blue-500 hover:text-blue-700">ดูเอกสาร</a></td>
-                        <td class="px-4 py-2">{{ record.status2 }}</td>
+                        <td class="px-4 py-2" style="
+                                color: 
+                                    {% if record.status2 == 'approved' %} green 
+                                    {% elif record.status2 == 'rejected' %} red 
+                                    {% elif record.status2 == 'pending' %} rgb(220, 220, 14) 
+                                    {% else %} black 
+                                    {% endif %};
+                            ">
+                            {{ record.status2 }}
+                        </td>
+
+                        <td class="px-4 py-2">
+                            <a href="{% url 'createform' %}" style="color: rgb(220, 220, 14);">
+                                <i class="fas fa-pencil-alt"></i> แก้ไข
+                            </a>
+                        </td>
+
+
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -109,7 +156,7 @@
                         <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">วันที่</th>
                         <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">เอกสารรับรอง</th>
                         <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">สถานะ</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">ลบเอกสาร</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">แก้ไขเอกสาร</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200"> <!-- เส้นแบ่งระหว่างแถว -->
@@ -121,7 +168,21 @@
 
                         <td class="px-4 py-2"><a href="{{ i.certificate2.url }}" target="_blank"
                                 class="text-blue-500 hover:text-blue-700">ดูเอกสาร </a></td>
-                        <td class="px-4 py-2">{{ i.status3 }}</td>
+                                <td class="px-4 py-2" style="
+                                color: 
+                                    {% if i.status3 == 'approved' %} green 
+                                    {% elif i.status3 == 'rejected' %} red 
+                                    {% elif i.status3 == 'pending' %} rgb(220, 220, 14) 
+                                    {% else %} black 
+                                    {% endif %};
+                            ">
+                            {{ i.status3 }}
+                        </td>
+                        <td class="px-4 py-2">
+                            <a href="{% url 'after_completed' %}" style="color: rgb(220, 220, 14);">
+                                <i class="fas fa-pencil-alt"></i> แก้ไข
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

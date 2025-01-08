@@ -2,7 +2,8 @@
 
 {% block content %}
 <div class="container mx-auto p-4">
-  <h2 class="text-2xl font-bold mb-4" style="color:rgb(61, 61, 187);font-family: 'JS Wansika Italic';">คำขอบันทึกหน่วยกิตนักศึกษา</h2>
+  <h2 class="text-2xl font-bold mb-4" style="color:rgb(61, 61, 187);font-family: 'JS Wansika Italic';">
+    คำขอบันทึกหน่วยกิตนักศึกษา</h2>
 
   <!-- เพิ่ม overflow-x-auto เพื่อให้ตารางสามารถเลื่อนได้ถ้ามันกว้างเกินไป -->
   <div class="overflow-x-auto">
@@ -15,69 +16,88 @@
           <th class="p-2 border">จำนวนชั่วโมงหน่วยกิต</th>
           <th class="p-2 border">สถานะ</th>
           <th class="p-2 border">ตรวจสอบเอกสาร</th>
+          <th class="p-2 border">ลบ/แก้ไข เอกสาร</th>
         </tr>
       </thead>
       <tbody>
         {% for coop in coops %}
-          <tr class="hover:bg-gray-50"> <!-- เปลี่ยนสีเมื่อ hover -->
-            <td class="p-2 border">{{ coop.user.first_name }}</td>
-            <td class="p-2 border">{{ coop.title }}</td>
-            <td class="p-2 border">
-              <a href="{{ coop.certificate.url }}" target="_blank" class="text-blue-500 hover:underline">
-                <i class="fas fa-file-pdf" style="color: red;"></i>
-              </a>
-            </td>
-            
-            <td class="p-2 border">{{ coop.score }}</td>
+        <tr class="hover:bg-gray-50"> <!-- เปลี่ยนสีเมื่อ hover -->
+          <td class="p-2 border">{{ coop.user.first_name }}  {{ coop.user.last_name }}</td>
+          <td class="p-2 border">{{ coop.title }}</td>
+          <td class="p-2 border">
+            <a href="{{ coop.certificate.url }}" target="_blank" class="text-blue-500 hover:underline">
+              <i class="fas fa-file-pdf" style="color: red;"></i>
+            </a>
+          </td>
 
-            <!-- สีตามสถานะ -->
-            <td class="p-2 border">
-              <span class="{% if coop.status == 'approved' %} text-green-500
+          <td class="p-2 border">{{ coop.score }}</td>
+
+          <!-- สีตามสถานะ -->
+          <td class="p-2 border">
+            <span class="{% if coop.status == 'approved' %} text-green-500
                             {% elif coop.status == 'pending' %} text-yellow-500
                             {% else %} text-red-500
                           {% endif %}">
-                {{ coop.status }}
-              </span>
-            </td>
+              {{ coop.status }}
+            </span>
+          </td>
 
-            <!-- ปุ่มสำหรับตรวจสอบและอนุมัติ -->
-            <td class="p-2 border">
-              <div class="flex justify-start items-center space-x-2">
-                <!-- ปุ่มสำหรับลบ -->
-                <form method="post" action="{% url 'delete_record' coop.pk %}">
-                  {% csrf_token %}
-                  <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
-                    style="min-width: 80px; height: 35px;"
-                    onclick="return confirm('คุณต้องการลบผู้ใช้นี้หรือไม่?');">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                        d="M3 6h18m-2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m5 0V4a1 1 0 011-1h4a1 1 0 011 1v2m3 0l1 1M5 6l1 1" />
-                    </svg>
-                    ลบ
-                  </button>
-                </form>
-            
-                <!-- ตรวจสอบสถานะ -->
-                {% if coop.status == 'pending' %}
-                  <!-- ปุ่มอนุมัติ -->
-                  <form method="post" action="{% url 'change_status' coop.pk %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="status" value="approved">
-                    <button type="submit" class="bg-blue-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
-                      style="min-width: 80px; height: 35px;"
-                      onclick="return confirm('อนุมัติคำขอหรือไม่?');">
-                      อนุมัติ
-                    </button>
-                  </form>
-                {% elif coop.status == 'approved' %}
-                  <!-- แสดงข้อความอนุมัติแล้ว -->
-                  <span class="text-green-500 font-bold">อนุมัติแล้ว</span>
-                {% endif %}
-              </div>
-            </td>
-            
+          <!-- ปุ่มสำหรับตรวจสอบและอนุมัติ -->
+          <td class="p-2 border">
+            <div class="flex justify-start items-center space-x-2">
+              <!-- ตรวจสอบสถานะ -->
+              {% if coop.status == 'pending' %}
+              <!-- ปุ่มอนุมัติ -->
+              <form method="post" action="{% url 'change_status' coop.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="approved">
+                <button type="submit"
+                  class="bg-blue-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
+                  style="min-width: 80px; height: 35px;" onclick="return confirm('อนุมัติคำขอหรือไม่?');">
+                  อนุมัติ
+                </button>
+              </form>
+              {% elif coop.status == 'approved' %}
+              <!-- แสดงข้อความอนุมัติแล้ว -->
+              <span class="text-green-500 font-bold">อนุมัติแล้ว</span>
+              {% endif %}
 
-          </tr>
+              {% if coop.status == 'pending' %}
+              <!-- ปุ่มอนุมัติ -->
+              <form method="post" action="{% url 'change_status_unapproved' coop.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="rejected">
+                <button type="submit"
+                  class="bg-red-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
+                  style="min-width: 80px; height: 35px;" onclick="return confirm('อนุมัติคำขอหรือไม่?');">
+                  ไม่อนุมัติ
+                </button>
+
+              </form>
+              {% elif coop.status == 'rejected' %}
+              <!-- แสดงข้อความอนุมัติแล้ว -->
+              <span class="text-red-500 font-bold">บันทึกไม่อนุมัติ</span>
+              {% endif %}
+
+            </div>
+          </td>
+          <td class="p-2 border">
+            <form method="post" action="{% url 'delete_record' coop.pk %}">
+              {% csrf_token %}
+              <button type="submit"
+                class="text-red-500 flex items-center justify-center"
+                style="border: none; background: none; min-width: 35px; height: 35px;" 
+                onclick="return confirm('คุณต้องการลบเอกสารคำขอนี้หรือไม่?');">
+                <i class="fas fa-trash-alt text-xl"></i>
+              </button>
+            </form>
+            
+            
+            
+        </td>
+
+
+        </tr>
         {% endfor %}
       </tbody>
     </table>

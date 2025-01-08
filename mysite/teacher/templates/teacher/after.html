@@ -39,32 +39,42 @@
               </td>
               <!-- ปุ่มอนุมัติถ้าสถานะเป็น 'pending' -->
               <td class="p-2 border">
-                {% if form.status3 == "pending" %}
-                <span
-                    class="{% if form.status3 == 'approved' %} text-green-500
-                          {% elif form.status3 == 'pending' %} text-yellow-500
-                          {% else %} text-red-500
-                {% endif %}"
-                  >
-
-                  </span>
-                  <!-- ปุ่มสำหรับอนุมัติ -->
-                  <form method="post" action="{% url 'change_status3' form.pk %}" style="text-align: center;">
+                <div class="flex justify-start items-center space-x-2">
+                  <!-- ตรวจสอบสถานะ -->
+                  {% if form.status3 == 'pending' %}
+                  <!-- ปุ่มอนุมัติ -->
+                  <form method="post" action="{% url 'change_status3' form.pk %}">
                     {% csrf_token %}
-                    <input type="hidden" name="status" value="approved">
-                    <button type="submit" class="bg-blue-500 text-white rounded px-2 py-1" style="width: 80px;"
-                    onclick="return confirm('อนุมัติคำขอหรือไม่?');">อนุมัติ</button>
+                    <input type="hidden" name="status3" value="approved">
+                    <button type="submit"
+                      class="bg-blue-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
+                      style="min-width: 80px; height: 35px;" onclick="return confirm('อนุมัติคำขอหรือไม่?');">
+                      อนุมัติ
+                    </button>
                   </form>
-                {% else %}
-                  <!-- หากสถานะไม่ใช่ 'pending', แสดงข้อความที่ถูกต้อง -->
-                  {% if form.status3 == "approved" %}
-                    <span class="text-green-500" >อนุมัติแล้ว</span>
-                  {% elif form.status3 == "rejected" %}
-                    <span class="text-red-500">ไม่อนุมัติ</span>
-                  {% else %}
-                    <span class="text-yellow-500">รอดำเนินการ</span>
+                  {% elif form.status3 == 'approved' %}
+                  <!-- แสดงข้อความอนุมัติแล้ว -->
+                  <span class="text-green-500 font-bold">อนุมัติแล้ว</span>
                   {% endif %}
-                {% endif %}
+    
+                  {% if form.status3 == 'pending' %}
+                  <!-- ปุ่มอนุมัติ -->
+                  <form method="post" action="{% url 'edit_unapproved3' form.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="status3" value="rejected">
+                    <button type="submit"
+                      class="bg-red-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
+                      style="min-width: 80px; height: 35px;" onclick="return confirm('อนุมัติคำขอหรือไม่?');">
+                      ไม่อนุมัติ
+                    </button>
+    
+                  </form>
+                  {% elif form.status3 == 'rejected' %}
+                  <!-- แสดงข้อความอนุมัติแล้ว -->
+                  <span class="text-red-500 font-bold">บันทึกไม่อนุมัติ</span>
+                  {% endif %}
+    
+                </div>
               </td>
               
               
