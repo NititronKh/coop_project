@@ -75,7 +75,7 @@ def createform(req):
     
     if user_form and user_form.status2 == "approved":
         # แจ้งข้อความหากสถานะเป็น 'approved'
-        messages.error(req, 'ไม่สามารถแก้ไขได้เนื่องจากเอกสารพิจารณาอนุมัติแล้ว')
+        messages.error(req, 'ไม่สามารถแก้ไขได้เนื่องจากเอกสารได้รับการพิจารณาอนุมัติแล้ว')
         return redirect('check')  # เปลี่ยนเส้นทางไปหน้าตรวจสอบ
 
     if req.method == "POST":
