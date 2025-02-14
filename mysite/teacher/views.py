@@ -10,6 +10,7 @@ from django.contrib.auth import login ,logout
 from users.models import *
 from users.forms import *
 from django.contrib import messages
+from django.contrib.auth import authenticate
 
 @login_required
 def teacher_homehome(req):
@@ -68,12 +69,22 @@ def list_name(request):
     })
 
 
+
 @login_required
 def delete_name(request, id):
-    x = get_object_or_404( CustomUser, pk=id)
-    x.delete()
-    messages.error(request,'ลบผู้ใช้แล้ว')
+    if request.method == 'POST':
+        password = request.POST.get('password')
+
+        # ตรวจสอบรหัสผ่านของ user ที่ล็อกอินอยู่
+        if request.user.check_password(password):
+            x = get_object_or_404(CustomUser, pk=id)
+            x.delete()
+            messages.success(request, 'ลบผู้ใช้แล้ว')
+        else:
+            messages.error(request, 'รหัสผ่านไม่ถูกต้อง')
+
     return redirect('list_name')
+
 
 @login_required
 def publish(request):

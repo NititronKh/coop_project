@@ -25,10 +25,35 @@
           <td class="p-2 border">{{ coop.user.first_name }}  {{ coop.user.last_name }}</td>
           <td class="p-2 border">{{ coop.title }}</td>
           <td class="p-2 border">
-            <a href="{{ coop.certificate.url }}" target="_blank" class="text-blue-500 hover:underline">
-              <i class="fas fa-file-pdf" style="color: red;"></i>
+            <a href="{{ coop.certificate.url }}" target="_blank" class="text-blue-500 hover:underline" title="ดูเอกสาร"
+              onclick="showFullScreenLoading(event, this)">
+              <i class="fas fa-file-pdf text-red-500"></i>
             </a>
           </td>
+          
+          <!-- ส่วนแสดง Loader -->
+          <div id="fullscreen-loader" class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 hidden flex items-center justify-center z-50">
+            <i class="fas fa-spinner fa-spin text-white text-6xl"></i>
+          </div>
+          
+          <script>
+            function showFullScreenLoading(event, element) {
+              event.preventDefault(); // ป้องกันการเปิดลิงก์ทันที
+          
+              const loader = document.getElementById('fullscreen-loader');
+              
+              // แสดง Loader และลดความเข้มของหน้าเว็บ
+              loader.classList.remove('hidden');
+          
+              // หน่วงเวลา 2 วินาทีก่อนเปิดเอกสาร
+              setTimeout(() => {
+                window.open(element.href, '_blank'); // เปิดเอกสาร
+                loader.classList.add('hidden'); // ซ่อน Loader กลับ
+              }, 3000);
+              
+            }
+          </script>
+          
 
           <td class="p-2 border">{{ coop.score }}</td>
 
@@ -69,7 +94,8 @@
                 <input type="hidden" name="status" value="rejected">
                 <button type="submit"
                   class="bg-red-500 text-white py-1 px-3 rounded text-sm flex items-center justify-center"
-                  style="min-width: 80px; height: 35px;" onclick="return confirm('อนุมัติคำขอหรือไม่?');">
+                  style="min-width: 80px; height: 35px;" onclick="return confirm('อนุมัติคำขอหรือไม่?');"
+                  >
                   ไม่อนุมัติ
                 </button>
 
@@ -82,12 +108,13 @@
             </div>
           </td>
           <td class="p-2 border">
-            <form method="post" action="{% url 'delete_record' coop.pk %}">
+            <form method="post" action="{% url 'delete_record' coop.pk %}" >
               {% csrf_token %}
               <button type="submit"
                 class="text-red-500 flex items-center justify-center"
                 style="border: none; background: none; min-width: 35px; height: 35px;" 
-                onclick="return confirm('คุณต้องการลบเอกสารคำขอนี้หรือไม่?');">
+                onclick="return confirm('คุณต้องการลบเอกสารคำขอนี้หรือไม่?');"
+                title="ลบรายการนี้">
                 <i class="fas fa-trash-alt text-xl"></i>
               </button>
             </form>
