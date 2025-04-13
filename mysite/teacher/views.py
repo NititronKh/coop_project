@@ -11,6 +11,7 @@ from users.models import *
 from users.forms import *
 from django.contrib import messages
 from django.contrib.auth import authenticate
+from users.forms import StaffRegistrationForm
 
 @login_required
 def teacher_homehome(req):
